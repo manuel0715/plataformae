@@ -3,9 +3,10 @@ package com.plataformae.ws.db.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "roles", schema = "administrativo")
 public class Rol implements Serializable {
 
     private static final long serialVersionUID = 1905122041950251207L;
@@ -16,6 +17,22 @@ public class Rol implements Serializable {
 
     @Column(length = 100, nullable = false)
     private String rol;
+
+    @ManyToMany
+    @JoinTable(
+            name = "rel_opciones_menu_roles",
+            joinColumns = @JoinColumn(name = "rol_id"),
+            inverseJoinColumns = @JoinColumn(name = "menu_opciones_id")
+    )
+    private Set<MenuOpciones> menuOpciones;
+
+    public Set<MenuOpciones> getMenuOpciones() {
+        return menuOpciones;
+    }
+
+    public void setMenuOpciones(Set<MenuOpciones> menuOpciones) {
+        this.menuOpciones = menuOpciones;
+    }
 
     public Integer getId() {
         return id;

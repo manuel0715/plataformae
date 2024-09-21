@@ -50,4 +50,4 @@ logging:
       max-history: 1
 
 auth:
-  prefixes: "/api/auth/,/plataformae/api/auth/"
+  prefixes: "/api/auth/,/plataformae/api/auth/,/api/usuarios/crear,/plataformae/api/usuarios/crear"

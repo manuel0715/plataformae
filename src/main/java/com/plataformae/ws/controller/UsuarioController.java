@@ -3,6 +3,7 @@ package com.plataformae.ws.controller;
 import com.plataformae.ws.configuration.MessageConfig;
 import com.plataformae.ws.db.entity.Usuarios;
 import com.plataformae.ws.dto.ApiResponse;
+import com.plataformae.ws.dto.AuthRequest;
 import com.plataformae.ws.service.IUsuarioService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,6 +28,9 @@ public class UsuarioController {
     @Autowired
     private MessageConfig messageConfig;
 
+    @Autowired
+    private AuthController authController;
+
 
     private static final Logger LOGGER = LogManager.getLogger(UsuarioController.class);
 
@@ -48,6 +52,11 @@ public class UsuarioController {
             }
 
            Usuarios nuevoUsuario = usuarioService.crearUsuario(request);
+
+            AuthRequest authRequest = new AuthRequest();
+            authRequest.setUsername(nuevoUsuario.getUsername());
+            authRequest.setPassword(nuevoUsuario.getIdentificacion());
+            nuevoUsuario.setToken(authController.generarSesionRegistro(authRequest));
 
             return buildResponse(
                     messageConfig.messageProperties().getUsuarioCreado(),

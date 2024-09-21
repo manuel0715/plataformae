@@ -41,16 +41,13 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public Usuarios crearUsuario(Usuarios usuario) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        userDetails.getUsername();
-
         if (usuario == null) {
             throw new IllegalArgumentException("El usuario no puede ser nulo");
         }
-        usuario.setUsername(usuario.getTipoIdentificacion()+usuario.getIdentificacion());
+        String userName = usuario.getTipoIdentificacion()+usuario.getIdentificacion();
+        usuario.setUsername(userName);
         usuario.setPassword(passwordEncoder.encode(usuario.getIdentificacion()));
-        usuario.setUsuarioCreador(userDetails.getUsername());
+        usuario.setUsuarioCreador(userName);
 
         try {
             return iUsuariosRepository.save(usuario);

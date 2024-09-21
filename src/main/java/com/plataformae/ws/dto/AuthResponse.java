@@ -1,5 +1,8 @@
 package com.plataformae.ws.dto;
 
+
+import java.util.List;
+
 public class AuthResponse {
 
     private String identificacion;
@@ -8,7 +11,16 @@ public class AuthResponse {
     private String apellidos;
     private String tipoUsuario;
     private String username;
-    private String toke;
+    private String token;
+    private List<MenuPadreDTO> menu;
+
+    public List<MenuPadreDTO> getMenuPadre() {
+        return menu;
+    }
+
+    public void setMenuPadre(List<MenuPadreDTO> menuPadre) {
+        this.menu = menuPadre;
+    }
 
     public String getIdentificacion() {
         return identificacion;
@@ -58,11 +70,11 @@ public class AuthResponse {
         this.username = username;
     }
 
-    public String getToke() {
-        return toke;
+    public String getToken() {
+        return token;
     }
 
-    public void setToke(String toke) {
-        this.toke = toke;
+    public void setToken(String toke) {
+        this.token = toke;
     }
 }

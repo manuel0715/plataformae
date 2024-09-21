@@ -3,10 +3,10 @@ package com.plataformae.ws.db.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Table(name = "menu_padre")
+@Table(name = "menu_padre", schema = "administrativo")
 public class MenuPadre implements Serializable {
 
     @Id
@@ -22,8 +22,8 @@ public class MenuPadre implements Serializable {
     @Column
     private Integer orden;
 
-    @OneToMany(mappedBy = "menuPadre")
-    private Set<MenuOpciones> menuOpciones;
+    @OneToMany(mappedBy = "menuPadre", cascade = CascadeType.ALL)
+    private List<MenuOpciones> menuOpciones;
 
     public Integer getId() {
         return id;
@@ -57,11 +57,11 @@ public class MenuPadre implements Serializable {
         this.orden = orden;
     }
 
-    public Set<MenuOpciones> getMenuOpciones() {
+    public List<MenuOpciones> getMenuOpciones() {
         return menuOpciones;
     }
 
-    public void setMenuOpciones(Set<MenuOpciones> menuOpciones) {
+    public void setMenuOpciones(List<MenuOpciones> menuOpciones) {
         this.menuOpciones = menuOpciones;
     }
 }

@@ -3,9 +3,12 @@ package com.plataformae.ws.controller;
 import com.plataformae.ws.configuration.JwtService;
 import com.plataformae.ws.configuration.MessageConfig;
 import com.plataformae.ws.db.entity.Usuarios;
+import com.plataformae.ws.db.entity.Rol;
 import com.plataformae.ws.dto.ApiResponse;
 import com.plataformae.ws.dto.AuthRequest;
 import com.plataformae.ws.dto.AuthResponse;
+import com.plataformae.ws.dto.MenuPadreDTO;
+import com.plataformae.ws.service.IRolService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RequestMapping("/api/auth")
@@ -33,17 +38,19 @@ public class AuthController {
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
     private final MessageConfig messageProperties;
-
+    private final IRolService roleService;
     @Autowired
     public AuthController(AuthenticationManager authenticationManager,
                           UserDetailsService userDetailsService,
                           JwtService jwtService,
-                          MessageConfig messageProperties) {
+                          MessageConfig messageProperties, IRolService roleService) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtService = jwtService;
         this.messageProperties = messageProperties;
+        this.roleService = roleService;
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(@RequestBody AuthRequest authRequest) {
@@ -79,7 +86,11 @@ public class AuthController {
             authResponse.setUsername(usuarios.getUsername());
             authResponse.setTipoUsuario(usuarios.getTipoUsuario());
             authResponse.setTipoIdentificacion(usuarios.getTipoIdentificacion());
-            authResponse.setToke(token);
+            authResponse.setToken(token);
+
+            List<Integer> roleIds = usuarios.getRoles().stream().map(Rol::getId).collect(Collectors.toList());
+            List<MenuPadreDTO> menuOpciones = roleService.getMenuByRoles(roleIds);
+            authResponse.setMenuPadre(menuOpciones);
         }
         return authResponse;
     }
@@ -87,5 +98,18 @@ public class AuthController {
     private ResponseEntity<ApiResponse<AuthResponse>> buildResponse(String message, AuthResponse authResponse, HttpStatus status) {
         ApiResponse<AuthResponse> response = new ApiResponse<>(message, authResponse, status.value());
         return new ResponseEntity<>(response, status);
+    }
+
+    public String generarSesionRegistro(AuthRequest authRequest){
+
+        try {
+            authenticateUser(authRequest);
+            AuthResponse authResponse = createAuthResponse(authRequest);
+            return  authResponse.getToken();
+        } catch (Exception ex) {
+            LOGGER.error("Error login: {}", ex.getMessage(), ex);
+            return "";
+        }
+
     }
 }

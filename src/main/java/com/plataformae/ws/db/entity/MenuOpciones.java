@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "menu_opciones")
+@Table(name = "menu_opciones", schema = "administrativo")
 public class MenuOpciones implements Serializable {
 
     @Id

@@ -7,12 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios", schema = "administrativo")
 public class Usuarios implements UserDetails, Serializable {
 
     @Serial
@@ -68,6 +70,18 @@ public class Usuarios implements UserDetails, Serializable {
     @Column(name = "contrasena", nullable = false, length = 32)
     @JsonIgnore
     private String password;
+
+    @ManyToMany
+    @JoinTable(
+            name = "rel_roles_usuarios",
+            schema = "administrativo",
+            joinColumns = @JoinColumn(name = "usuario", referencedColumnName = "usuario"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id")
+    )
+    private Set<Rol> roles;
+
+    @Transient
+    private String token;
 
     public Long getId() {
         return id;
@@ -173,6 +187,14 @@ public class Usuarios implements UserDetails, Serializable {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
+    public Set<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String getUsername() {
         return username;
@@ -216,4 +238,40 @@ public class Usuarios implements UserDetails, Serializable {
         return true;
     }
 
+    @PrePersist
+    @PreUpdate
+    protected void onSave() {
+        // Establece la fecha de creación si es la primera vez que se guarda
+        if (fechaCreacion == null) {
+            this.fechaCreacion = LocalDateTime.now();
+        }
+
+        // Convierte todos los campos String a mayúsculas
+        Field[] fields = this.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            if (field.getType().equals(String.class)  && !field.getName().equals("password")) {
+                field.setAccessible(true);
+                try {
+                    String value = (String) field.get(this);
+                    if (value != null) {
+                        field.set(this, value.toUpperCase());
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public Usuarios (){
+        this.estado = "";
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }
