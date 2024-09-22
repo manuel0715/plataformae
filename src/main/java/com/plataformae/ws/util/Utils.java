@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.plataformae.ws.dto.ApiResponse;
+import com.plataformae.ws.dto.AuthResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,19 @@ public class Utils {
             LOGGER.error("Error al convertir objeto a JSON: {}", e.getMessage(), e);
             return "{}";
         }
+    }
+
+    public static String enmascararEmail(String email) {
+        String[] partes = email.split("@");
+        String nombreUsuario = partes[0];
+        String dominio = partes[1];
+
+        if (nombreUsuario.length() > 3) {
+            nombreUsuario = nombreUsuario.substring(0, 3) + "***";
+        } else {
+            nombreUsuario = nombreUsuario.charAt(0) + "***";
+        }
+
+        return nombreUsuario + "@" + dominio;
     }
 }

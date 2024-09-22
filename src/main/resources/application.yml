@@ -21,9 +21,22 @@ spring:
       hibernate:
         format_sql: true
     open-in-view: false
+  mail:
+    host: smtp.zoho.com
+    port: 587
+    username: no-responder@recuperacionesnaranjo.com
+    password: 1pvmQix*
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 jwt:
   secret: "kaS1ElkVdZs9e6Z2mdeFK4jCddtSKZvNZi/yMZtUBzc="
   expiration: 604800000
+  email-expiration: 86400000
 
 app:
   messages:
@@ -32,7 +45,6 @@ app:
     error-occurred: "ha ocurrido un error"
     usuario-creado: "Usuario creado con éxito"
     usuario-ya-existe: "El numero de identificación ingresado ya se encuentra registrado"
-    celular-ya-existe: "El celular ingresado ya se encuentra asociado a otro usuario"
 
 logging:
   level:
@@ -50,4 +62,4 @@ logging:
       max-history: 1
 
 auth:
-  prefixes: "/api/auth/,/plataformae/api/auth/,/api/usuarios/crear,/plataformae/api/usuarios/crear"
+  prefixes: "/api/auth/,/plataformae/api/auth/,/api/usuarios/crear,/plataformae/api/usuarios/crear,/api/otp/"

@@ -2,6 +2,7 @@ package com.plataformae.ws.configuration;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -52,12 +53,12 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(String username, String key, Long timeExpiration) {
         return "Bearer "+Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMillis))
-                .signWith(secretKey)
+                .setExpiration(new Date(System.currentTimeMillis() + timeExpiration))
+                .signWith(Keys.hmacShaKeyFor(Base64.getDecoder().decode(key)))
                 .compact();
     }
 

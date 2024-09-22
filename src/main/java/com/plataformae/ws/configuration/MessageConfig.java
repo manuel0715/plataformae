@@ -53,8 +53,5 @@ public class MessageConfig {
         public String getUsuarioYaExiste() {
             return environment.getProperty("app.messages.usuario-ya-existe", "Ya existe usuario");
         }
-        public String getCelularYaExiste() {
-            return environment.getProperty("app.messages.celular-ya-existe", "Ya existe celular");
-        }
     }
 }
