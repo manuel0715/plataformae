@@ -9,4 +9,8 @@ public interface IUsuarioService {
 
     public Usuarios crearUsuario(Usuarios usuario);
 
+    public boolean existeEmail(String email,String identificacion,String tipoIdentificacion);
+
+    public Usuarios buscarUsuario(Usuarios usuarios);
+
 }

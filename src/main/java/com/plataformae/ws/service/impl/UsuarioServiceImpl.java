@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
@@ -55,6 +56,16 @@ public class UsuarioServiceImpl implements IUsuarioService {
             LOGGER.error("Error: {}",e.getMessage());
             throw new Exceptions("Error al guardar el usuario, por favor comunicate con soporte" );
         }
+    }
+
+    @Override
+    public boolean existeEmail(String email, String identificacion,String tipoIdentificacion) {
+        return iUsuariosRepository.existsByEmailAndIdentificacionAndTipoIdentificacion(email,identificacion,tipoIdentificacion);
+    }
+
+    @Override
+    public Usuarios buscarUsuario(Usuarios usuarios) {
+        return iUsuariosRepository.findUsuariosByIdentificacionAndTipoIdentificacion(usuarios.getIdentificacion(),usuarios.getTipoIdentificacion());
     }
 
 }

@@ -83,9 +83,6 @@ public class Usuarios implements UserDetails, Serializable {
     @Transient
     private String token;
 
-    @Column(name = "activado", nullable = false)
-    private boolean activado=false;
-
     public Long getId() {
         return id;
     }
@@ -278,11 +275,4 @@ public class Usuarios implements UserDetails, Serializable {
         this.token = token;
     }
 
-    public boolean isActivado() {
-        return activado;
-    }
-
-    public void setActivado(boolean activado) {
-        this.activado = activado;
-    }
 }

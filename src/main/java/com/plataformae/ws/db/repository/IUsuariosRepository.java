@@ -11,5 +11,8 @@ public interface IUsuariosRepository extends JpaRepository<Usuarios, String> {
 
     boolean existsByCelular(String identificacion);
 
+    boolean existsByEmailAndIdentificacionAndTipoIdentificacion(String email, String identificacion, String tipoIdentificacion);
+
+    Usuarios findUsuariosByIdentificacionAndTipoIdentificacion(String identificacion,String tipoIdentificacion);
 
 }

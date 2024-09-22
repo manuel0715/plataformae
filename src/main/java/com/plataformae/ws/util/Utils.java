@@ -36,7 +36,7 @@ public class Utils {
         }
     }
 
-    public static String enmascararEmail(String email) {
+    public static String maskEmail(String email) {
         String[] partes = email.split("@");
         String nombreUsuario = partes[0];
         String dominio = partes[1];
@@ -48,5 +48,10 @@ public class Utils {
         }
 
         return nombreUsuario + "@" + dominio;
+    }
+
+    public static String maskPhoneNumber(String phoneNumber) {
+               // Enmascarar los primeros dígitos y mostrar solo los últimos 4
+        return phoneNumber.replaceAll(".(?=.{4})", "*");
     }
 }

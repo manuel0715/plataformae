@@ -6,6 +6,7 @@ import com.plataformae.ws.db.entity.Usuarios;
 import com.plataformae.ws.domain.EmailService;
 import com.plataformae.ws.dto.ApiResponse;
 import com.plataformae.ws.dto.AuthRequest;
+import com.plataformae.ws.dto.UsuarioResponse;
 import com.plataformae.ws.service.IAuthService;
 import com.plataformae.ws.service.IUsuarioService;
 import org.apache.logging.log4j.LogManager;
@@ -26,8 +27,7 @@ import javax.crypto.SecretKey;
 import java.util.Collection;
 import java.util.List;
 
-import static com.plataformae.ws.util.Utils.buildResponse;
-import static com.plataformae.ws.util.Utils.objectToJsonString;
+import static com.plataformae.ws.util.Utils.*;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -64,6 +64,7 @@ public class UsuarioController {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("REQUEST /crear: {}", objectToJsonString(request));
             }
+
             if (usuarioService.existeUsuario(request.getIdentificacion(), request.getTipoIdentificacion())) {
                 return buildResponse(
                         messageConfig.messageProperties().getUsuarioYaExiste(),
@@ -103,5 +104,41 @@ public class UsuarioController {
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
+    }
+    @PostMapping(value = "/buscar" ,consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<UsuarioResponse>> buscarUsuario(@RequestBody Usuarios request) {
+
+        if (!usuarioService.existeUsuario(request.getIdentificacion(), request.getTipoIdentificacion())) {
+            return buildResponse(
+                    "No se encontro Usuario con la información diligenciada.",
+                    null,
+                    HttpStatus.CONFLICT
+            );
+        }
+
+        Usuarios usuario = usuarioService.buscarUsuario(request);
+        usuario.setEmail(maskEmail(usuario.getEmail()));
+        usuario.setCelular(maskPhoneNumber(usuario.getCelular()));
+        UsuarioResponse usuarioResponse = new UsuarioResponse(
+                usuario.getIdentificacion(),
+                usuario.getEstado(),
+                usuario.getTipoIdentificacion(),
+                usuario.getNombres(),
+                usuario.getApellidos(),
+                usuario.getEmail(),
+                usuario.getCelular(),
+                usuario.getTipoUsuario(),
+                usuario.getFechaCreacion(),
+                usuario.getUsername()
+        );
+
+                return buildResponse(
+                        "Consulta éxitosa",
+                        usuarioResponse,
+                        HttpStatus.OK
+                );
+
+
     }
 }

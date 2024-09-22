@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.plataformae.ws.util.Utils.buildResponse;
-import static com.plataformae.ws.util.Utils.enmascararEmail;
+import static com.plataformae.ws.util.Utils.maskEmail;
 
 @RestController
 @RequestMapping("/api/otp")
@@ -43,7 +43,7 @@ public class OtpController {
         return buildResponse(
                 "Para completar la verificación de tu correo, " +
                         "hemos enviado un código de verificación (OTP) a tu correo electrónico: " +
-                        enmascararEmail(email) + ". Recuerda que este código es válido por 5 minutos.",
+                        maskEmail(email) + ". Recuerda que este código es válido por 5 minutos.",
                     null,
                         HttpStatus.OK
         );
