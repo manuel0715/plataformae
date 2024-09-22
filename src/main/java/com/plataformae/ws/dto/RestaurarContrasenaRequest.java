@@ -2,17 +2,10 @@ package com.plataformae.ws.dto;
 
 public class RestaurarContrasenaRequest {
 
-    private String email;
     private String identificacion;
     private String tipoIdentificacion;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private String otp;
+    private String nuevaContrasena;
 
     public String getIdentificacion() {
         return identificacion;
@@ -28,5 +21,21 @@ public class RestaurarContrasenaRequest {
 
     public void setTipoIdentificacion(String tipoIdentificacion) {
         this.tipoIdentificacion = tipoIdentificacion;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+
+    public String getNuevaContrasena() {
+        return nuevaContrasena;
+    }
+
+    public void setNuevaContrasena(String nuevaContrasena) {
+        this.nuevaContrasena = nuevaContrasena;
     }
 }

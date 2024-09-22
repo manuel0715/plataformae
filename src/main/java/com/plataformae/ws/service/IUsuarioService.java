@@ -13,4 +13,6 @@ public interface IUsuarioService {
 
     public Usuarios buscarUsuario(Usuarios usuarios);
 
+    public int updatePasword(String username, String password);
+
 }

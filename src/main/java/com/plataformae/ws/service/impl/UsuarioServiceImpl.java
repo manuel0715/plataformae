@@ -68,4 +68,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
         return iUsuariosRepository.findUsuariosByIdentificacionAndTipoIdentificacion(usuarios.getIdentificacion(),usuarios.getTipoIdentificacion());
     }
 
+    @Override
+    public int updatePasword(String username, String password) {
+        return iUsuariosRepository.updatePasword(username,passwordEncoder.encode(password));
+    }
+
 }

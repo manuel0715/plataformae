@@ -118,8 +118,6 @@ public class UsuarioController {
         }
 
         Usuarios usuario = usuarioService.buscarUsuario(request);
-        usuario.setEmail(maskEmail(usuario.getEmail()));
-        usuario.setCelular(maskPhoneNumber(usuario.getCelular()));
         UsuarioResponse usuarioResponse = new UsuarioResponse(
                 usuario.getIdentificacion(),
                 usuario.getEstado(),
@@ -127,7 +125,8 @@ public class UsuarioController {
                 usuario.getNombres(),
                 usuario.getApellidos(),
                 usuario.getEmail(),
-                usuario.getCelular(),
+                maskEmail(usuario.getEmail()),
+                maskPhoneNumber(usuario.getCelular()),
                 usuario.getTipoUsuario(),
                 usuario.getFechaCreacion(),
                 usuario.getUsername()

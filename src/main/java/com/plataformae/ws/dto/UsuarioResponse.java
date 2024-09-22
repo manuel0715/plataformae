@@ -13,12 +13,14 @@ public class UsuarioResponse {
     private String nombres;
     private String apellidos;
     private String email;
+    private String emailMask;
     private String celular;
     private String tipoUsuario;
     private LocalDateTime fechaCreacion;
     private String username;
 
-    public UsuarioResponse(String identificacion, String estado, String tipoIdentificacion, String nombres, String apellidos, String email, String celular, String tipoUsuario, LocalDateTime fechaCreacion, String username) {
+    public UsuarioResponse(String identificacion, String estado, String tipoIdentificacion,
+                           String nombres, String apellidos, String email, String emailMask, String celular, String tipoUsuario, LocalDateTime fechaCreacion, String username) {
         this.identificacion = identificacion;
         this.estado = estado;
         this.tipoIdentificacion = tipoIdentificacion;
@@ -29,6 +31,7 @@ public class UsuarioResponse {
         this.tipoUsuario = tipoUsuario;
         this.fechaCreacion = fechaCreacion;
         this.username = username;
+        this.emailMask=emailMask;
     }
 
     public String getIdentificacion() {
@@ -77,6 +80,14 @@ public class UsuarioResponse {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEmailMask() {
+        return emailMask;
+    }
+
+    public void setEmailMask(String emailMask) {
+        this.emailMask = emailMask;
     }
 
     public String getCelular() {
