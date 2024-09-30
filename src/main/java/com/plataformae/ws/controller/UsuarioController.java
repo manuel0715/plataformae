@@ -33,17 +33,11 @@ import static com.plataformae.ws.util.Utils.*;
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
-    @Value("${jwt.secret}")
-    private  String secret;
-    @Value("${jwt.email-expiration}")
-    private long jwtExpirationInMillis;
-
     private final IUsuarioService usuarioService;
     private final MessageConfig messageConfig;
     private final IAuthService iAuthService;
     private final JwtService jwtService;
     private final EmailService emailService;
-
 
     private static final Logger LOGGER = LogManager.getLogger(UsuarioController.class);
 

@@ -4,9 +4,9 @@ spring:
   application:
     name: plataformae
   datasource:
-    url: "jdbc:postgresql://localhost:5432/plataformae"
+    url: "jdbc:postgresql://147.79.74.52:5432/plataformae"
     username: "postgres"
-    password: "admin"
+    password: "Plataforma3*."
     driver-class-name: org.postgresql.Driver
     hikari:
       minimum-idle: 5
@@ -16,16 +16,16 @@ spring:
       connection-timeout: 30000
       pool-name: HikariPool
   jpa:
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
     open-in-view: false
   mail:
-    host: smtp.zoho.com
+    host: smtp.hostinger.com
     port: 587
-    username: no-responder@recuperacionesnaranjo.com
-    password: 1pvmQix*
+    username: notificaciones@plataformae.com.co
+    password: Plataforma3*
     properties:
       mail:
         smtp:
@@ -62,4 +62,4 @@ logging:
       max-history: 1
 
 auth:
-  prefixes: "/api/auth/,/api/usuarios/,/api/otp/"
+  prefixes: "/api/auth/,/api/usuarios/,/api/otp/,/api/configuracion/"
