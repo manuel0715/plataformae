@@ -14,6 +14,7 @@ public class UniversidadDTO {
     private String tipoUniversidad;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<CiudadDTO> ciudades;
+    private String logoBase64;
 
     public UniversidadDTO(){
 
@@ -83,5 +84,13 @@ public class UniversidadDTO {
 
     public void setCiudades(List<CiudadDTO> ciudades) {
         this.ciudades = ciudades;
+    }
+
+    public String getLogoBase64() {
+        return logoBase64;
+    }
+
+    public void setLogoBase64(String logoBase64) {
+        this.logoBase64 = logoBase64;
     }
 }

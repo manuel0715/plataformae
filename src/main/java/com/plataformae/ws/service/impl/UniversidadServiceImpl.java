@@ -2,6 +2,7 @@ package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.*;
 import com.plataformae.ws.db.repository.IUniversidadRepository;
+import com.plataformae.ws.domain.ImagenService;
 import com.plataformae.ws.dto.*;
 import com.plataformae.ws.service.IUniversidadService;
 import jakarta.persistence.criteria.Join;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,8 +24,11 @@ public class UniversidadServiceImpl implements IUniversidadService {
 
     private final IUniversidadRepository universidadRepository;
 
-    public UniversidadServiceImpl(IUniversidadRepository universidadRepository) {
+    private final ImagenService imageService;
+
+    public UniversidadServiceImpl(IUniversidadRepository universidadRepository, ImagenService imageService) {
         this.universidadRepository = universidadRepository;
+        this.imageService = imageService;
     }
 
     @Override
@@ -85,6 +90,8 @@ public class UniversidadServiceImpl implements IUniversidadService {
                     universidadDTO.setNombre(uni.getNombre());
                     universidadDTO.setNit(uni.getNit());
                     universidadDTO.setTipoUniversidad(uni.getTipoUniversidad());
+                    universidadDTO.setLogoBase64(imageService.convertirImagenBase64(uni.getLogo()));
+
 
                     // Mapear ciudades
                     List<CiudadDTO> ciudadDTOs = uni.getRelUniversidadCiudades().stream()

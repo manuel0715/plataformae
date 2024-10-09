@@ -2,6 +2,8 @@ package com.plataformae.ws.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -40,7 +42,9 @@ public class Usuarios implements UserDetails, Serializable {
     @Column(name = "apellidos", length = 100, nullable = false)
     private String apellidos;
 
-    @Column(name = "email", length = 80, unique = true)
+    @Column(name = "email", length = 80, unique = true, nullable = false)
+    @NotBlank(message = "El email no puede estar vacío.")
+    @Email(message = "El email debe ser válido.")
     private String email;
 
     @Column(name = "celular", length = 12, nullable = false, unique = true)

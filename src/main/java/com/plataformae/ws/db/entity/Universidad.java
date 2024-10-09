@@ -39,6 +39,9 @@ public class Universidad {
     @OneToMany(mappedBy = "universidad", fetch = FetchType.LAZY)
     private List<RelUniversidadCiudad> relUniversidadCiudad;
 
+    @Column(name = "logo")
+    private String logo = "";
+
 
 
     public Long getId() {
@@ -121,5 +124,19 @@ public class Universidad {
         this.relUniversidadCiudad = relUniversidadCiudad;
     }
 
+    public List<RelUniversidadCiudad> getRelUniversidadCiudad() {
+        return relUniversidadCiudad;
+    }
 
+    public void setRelUniversidadCiudad(List<RelUniversidadCiudad> relUniversidadCiudad) {
+        this.relUniversidadCiudad = relUniversidadCiudad;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
 }

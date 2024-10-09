@@ -3,12 +3,18 @@ package com.plataformae.ws.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.plataformae.ws.db.entity.Usuarios;
 import com.plataformae.ws.dto.ApiResponse;
-import com.plataformae.ws.dto.AuthResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Set;
 
 public class Utils {
 
@@ -34,6 +40,19 @@ public class Utils {
             LOGGER.error("Error al convertir objeto a JSON: {}", e.getMessage(), e);
             return "{}";
         }
+    }
+
+    public void validarEmail(String email) {
+        // Validar el email
+        if (email == null || email.trim().isEmpty()) {
+            LOGGER.error("El email no puede estar vacío.");
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            LOGGER.error("El email debe ser válido.");
+            return;
+        }
+
     }
 
     public static String maskEmail(String email) {
