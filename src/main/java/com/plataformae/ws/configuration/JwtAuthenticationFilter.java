@@ -49,8 +49,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         Set<String> prefixSet = new HashSet<>(prefixes);
 
-        System.out.println("path:"+ path);
-        System.out.println("prefixSet:"+ prefixSet);
 
         if (prefixSet.stream().anyMatch(path::startsWith)) {
             filterChain.doFilter(request, response);

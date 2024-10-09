@@ -2,6 +2,8 @@ package com.plataformae.ws.db.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "carrera", schema = "configuracion")
@@ -17,17 +19,11 @@ public class Carrera {
     @Column(nullable = false)
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "universidad_id", nullable = false)
-    private Universidad universidad;
+    @OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY)
+    private List<RelCarreraMateria> relCarreraMateria;
 
-    @ManyToOne
-    @JoinColumn(name = "sede_id", nullable = false)
-    private Sede sede; // Relación con Sede
-
-    @ManyToOne
-    @JoinColumn(name = "semestre_id", nullable = false)
-    private Semestre semestre;
+    @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RelSedeCarrera> relSedeCarrera; // Nueva relación
 
     private Integer duracion; // duración en semestres
 
@@ -57,29 +53,6 @@ public class Carrera {
         this.nombre = nombre;
     }
 
-    public Universidad getUniversidad() {
-        return universidad;
-    }
-
-    public void setUniversidad(Universidad universidad) {
-        this.universidad = universidad;
-    }
-
-    public Sede getSede() {
-        return sede;
-    }
-
-    public void setSede(Sede sede) {
-        this.sede = sede;
-    }
-
-    public Semestre getSemestre() {
-        return semestre;
-    }
-
-    public void setSemestre(Semestre semestre) {
-        this.semestre = semestre;
-    }
 
     public Integer getDuracion() {
         return duracion;
@@ -95,5 +68,21 @@ public class Carrera {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public List<RelCarreraMateria> getRelCarreraMaterias() {
+        return relCarreraMateria;
+    }
+
+    public void setRelCarreraMaterias(List<RelCarreraMateria> relCarreraMaterias) {
+        this.relCarreraMateria = relCarreraMaterias;
+    }
+
+    public List<RelSedeCarrera> getRelSedeCarreras() {
+        return relSedeCarrera;
+    }
+
+    public void setRelSedeCarreras(List<RelSedeCarrera> relSedeCarreras) {
+        this.relSedeCarrera = relSedeCarreras;
     }
 }

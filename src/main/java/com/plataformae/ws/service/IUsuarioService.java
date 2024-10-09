@@ -15,4 +15,6 @@ public interface IUsuarioService {
 
     public int updatePasword(String username, String password);
 
+    public boolean existeUsuario(String usuario);
+
 }

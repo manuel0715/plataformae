@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface IUsuariosRepository extends JpaRepository<Usuarios, String> {
     Usuarios findByUsername(String username);
 
+    boolean existsByUsername(String username);
+
     boolean existsByIdentificacionAndTipoIdentificacion(String identificacion, String tipoDocumento);
 
     boolean existsByCelular(String identificacion);

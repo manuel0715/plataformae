@@ -1,6 +1,6 @@
 package com.plataformae.ws.dto;
-import com.plataformae.ws.db.entity.Carrera;
-import com.plataformae.ws.db.entity.Ciudad;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ public class SedeDTO {
     private String estado;
     private String nombre;
     private String direccion;
+    @JsonIgnore
     private CiudadDTO ciudad;
     private List<CarreraDTO> carreras;
 

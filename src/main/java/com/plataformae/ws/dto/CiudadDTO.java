@@ -1,11 +1,16 @@
 package com.plataformae.ws.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
+
 public class CiudadDTO {
     private Long id;
     private String estado;
     private String nombre;
     private String codigoPostal;
     private String abreviatura;
+    private List<SedeDTO> sedes;
 
     public CiudadDTO(Long id, String estado, String nombre, String codigoPostal, String abreviatura) {
         this.id = id;
@@ -15,9 +20,12 @@ public class CiudadDTO {
         this.abreviatura = abreviatura;
     }
 
+
+
     public CiudadDTO() {
 
     }
+
 
     public Long getId() {
         return id;
@@ -57,6 +65,14 @@ public class CiudadDTO {
 
     public void setAbreviatura(String abreviatura) {
         this.abreviatura = abreviatura;
+    }
+
+    public List<SedeDTO> getSedes() {
+        return sedes;
+    }
+
+    public void setSedes(List<SedeDTO> sedes) {
+        this.sedes = sedes;
     }
 }
 

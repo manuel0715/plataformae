@@ -1,8 +1,6 @@
 package com.plataformae.ws.controller;
 
 import com.plataformae.ws.db.entity.Ciudad;
-import com.plataformae.ws.db.entity.Sede;
-import com.plataformae.ws.db.entity.Universidad;
 import com.plataformae.ws.dto.ApiResponse;
 import com.plataformae.ws.dto.SedeDTO;
 import com.plataformae.ws.dto.UniversidadDTO;
@@ -52,5 +50,15 @@ public class ConfiguracionController {
     public ResponseEntity<ApiResponse<List<UniversidadDTO>>> obtenerUniversidades() {
 
         return iUniversidadService.obtenerUniversidades();
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<ApiResponse<List<UniversidadDTO>>>  buscarUniversidades(
+            @RequestParam(value = "universidad", required = false) String universidad,
+            @RequestParam(value = "ciudad", required = false) String ciudad,
+            @RequestParam(value = "carrera", required = false) String carrera,
+            @RequestParam(value = "sede", required = false) String sede) {
+
+        return iUniversidadService.buscarUniversidades(universidad, ciudad, carrera,sede);
     }
 }

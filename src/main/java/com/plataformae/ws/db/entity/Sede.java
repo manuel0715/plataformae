@@ -1,9 +1,6 @@
 package com.plataformae.ws.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -17,25 +14,18 @@ public class Sede {
     @Column(nullable = false, length = 2)
     private String estado = "";
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "universidad_id", referencedColumnName = "id")
-    private Universidad universidad;
-
-    @ManyToOne
-    @JoinColumn(name = "ciudad_id", referencedColumnName = "id")
-    private Ciudad ciudad;
-
-
     @Column(nullable = false, length = 255)
     private String nombre;
 
     @Column(length = 255)
     private String direccion;
 
-    @OneToMany(mappedBy = "sede")
-    private List<Carrera> carrera; // Añadir esta línea para relacionar las carreras
+    @ManyToOne
+    @JoinColumn(name = "rel_universidad_ciudad_id")
+    private RelUniversidadCiudad relUniversidadCiudad;
 
+    @OneToMany(mappedBy = "sede", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RelSedeCarrera> relSedeCarrera; // Nueva relación
 
     public Long getId() {
         return id;
@@ -53,21 +43,7 @@ public class Sede {
         this.estado = estado;
     }
 
-    public Universidad getUniversidad() {
-        return universidad;
-    }
 
-    public void setUniversidad(Universidad universidad) {
-        this.universidad = universidad;
-    }
-
-    public Ciudad getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
-    }
 
     public String getNombre() {
         return nombre;
@@ -85,13 +61,19 @@ public class Sede {
         this.direccion = direccion;
     }
 
-    public List<Carrera> getCarreras() {
-        return carrera;
+    public RelUniversidadCiudad getRelUniversidadCiudad() {
+        return relUniversidadCiudad;
     }
 
-    public void setCarreras(List<Carrera> carrera) {
-        this.carrera = carrera;
+    public void setRelUniversidadCiudad(RelUniversidadCiudad relUniversidadCiudad) {
+        this.relUniversidadCiudad = relUniversidadCiudad;
     }
 
+    public List<RelSedeCarrera> getRelSedeCarreras() {
+        return relSedeCarrera;
+    }
 
+    public void setRelSedeCarreras(List<RelSedeCarrera> relSedeCarreras) {
+        this.relSedeCarrera = relSedeCarreras;
+    }
 }

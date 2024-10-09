@@ -36,8 +36,9 @@ public class Universidad {
     @Column(name = "fecha_ultima_modificacion")
     private LocalDateTime fechaUltimaModificacion = LocalDateTime.of(2000, 1, 1, 0, 0);
 
-    @OneToMany(mappedBy = "universidad")
-    private List<Sede> sede;
+    @OneToMany(mappedBy = "universidad", fetch = FetchType.LAZY)
+    private List<RelUniversidadCiudad> relUniversidadCiudad;
+
 
 
     public Long getId() {
@@ -112,19 +113,13 @@ public class Universidad {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
-    public List<Sede> getSedes() {
-        return sede;
+    public List<RelUniversidadCiudad> getRelUniversidadCiudades() {
+        return relUniversidadCiudad;
     }
 
-    public void setSedes(List<Sede> sedes) {
-        this.sede = sedes;
+    public void setRelUniversidadCiudades(List<RelUniversidadCiudad> relUniversidadCiudad) {
+        this.relUniversidadCiudad = relUniversidadCiudad;
     }
 
-    public List<Sede> getSede() {
-        return sede;
-    }
 
-    public void setSede(List<Sede> sede) {
-        this.sede = sede;
-    }
 }

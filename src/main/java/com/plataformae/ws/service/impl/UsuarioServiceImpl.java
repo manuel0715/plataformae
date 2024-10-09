@@ -35,6 +35,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
+    public boolean existeUsuario(String usuario) {
+        return iUsuariosRepository.existsByUsername(usuario);
+    }
+
+    @Override
     public boolean existeCelular(String identificacion) {
         return iUsuariosRepository.existsByCelular(identificacion);
     }

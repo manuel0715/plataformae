@@ -1,6 +1,5 @@
 package com.plataformae.ws.service;
 
-import com.plataformae.ws.db.entity.Universidad;
 import com.plataformae.ws.dto.ApiResponse;
 import com.plataformae.ws.dto.UniversidadDTO;
 import org.springframework.http.ResponseEntity;

@@ -2,6 +2,8 @@ package com.plataformae.ws.db.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "ciudad", schema = "configuracion")
 public class Ciudad {
@@ -23,8 +25,13 @@ public class Ciudad {
     private String codigoPostal;
 
     @ManyToOne
-    @JoinColumn(name = "departamento_id", referencedColumnName = "id")
+    @JoinColumn(name = "departamento_id")
     private Departamento departamento;
+
+    @OneToMany(mappedBy = "ciudad", fetch = FetchType.LAZY)
+    private List<RelUniversidadCiudad> relUniversidadCiudades;
+
+
 
     public Long getId() {
         return id;

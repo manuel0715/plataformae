@@ -1,5 +1,8 @@
 package com.plataformae.ws.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class UniversidadDTO {
@@ -9,19 +12,29 @@ public class UniversidadDTO {
     private String nombre;
     private String nit;
     private String tipoUniversidad;
-    private List<SedeDTO> sedes;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<CiudadDTO> ciudades;
 
     public UniversidadDTO(){
 
     }
 
-    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad, List<SedeDTO> sedes) {
+    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad, List<CiudadDTO> ciudades) {
         this.id = id;
         this.estado = estado;
         this.nombre = nombre;
         this.nit = nit;
         this.tipoUniversidad = tipoUniversidad;
-        this.sedes = sedes;
+        this.ciudades = ciudades;
+    }
+
+    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad) {
+        this.id = id;
+        this.estado = estado;
+        this.nombre = nombre;
+        this.nit = nit;
+        this.tipoUniversidad = tipoUniversidad;
+        this.ciudades = new ArrayList<>(); // Inicia vacío por defecto si no se pasan ciudades
     }
 
     public Long getId() {
@@ -64,11 +77,11 @@ public class UniversidadDTO {
         this.tipoUniversidad = tipoUniversidad;
     }
 
-    public List<SedeDTO> getSedes() {
-        return sedes;
+    public List<CiudadDTO> getCiudades() {
+        return ciudades;
     }
 
-    public void setSedes(List<SedeDTO> sedes) {
-        this.sedes = sedes;
+    public void setCiudades(List<CiudadDTO> ciudades) {
+        this.ciudades = ciudades;
     }
 }

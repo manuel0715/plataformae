@@ -44,6 +44,14 @@ public class AuthController {
         LOGGER.info("REQUEST /api/auth/login: {}", authRequest.getUsername());
 
         try {
+            if(!iUsuarioService.existeUsuario(authRequest.getUsername())){
+                return buildResponse(
+                        "Usuario o contraseña invalidos",
+                        null,
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
             iAuthService.authenticateUser(authRequest);
             AuthResponse authResponse = iAuthService.createAuthResponse(authRequest);
             return buildResponse(messageProperties.messageProperties().getLoginExitoso(), authResponse, HttpStatus.OK);
