@@ -3,25 +3,24 @@ package com.plataformae.ws.db.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "materia", schema = "configuracion")
-public class Materia {
+@Table(name = "estado_contacto", schema = "configuracion")
+public class EstadoContacto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
+    @Column(name = "estado", nullable = false, length = 2)
     private String estado;
+
+    @Column(name = "nombre", nullable = false, length = 40)
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sede_id", nullable = false)
-    private Sede sede;
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,13 +39,4 @@ public class Materia {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public Sede getSede() {
-        return sede;
-    }
-
-    public void setSede(Sede sede) {
-        this.sede = sede;
-    }
 }
-

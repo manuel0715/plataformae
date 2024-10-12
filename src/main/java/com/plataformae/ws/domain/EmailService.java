@@ -22,7 +22,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setFrom(from);
-        message.setSubject("Tu OTP de verificación");
+        message.setSubject("Tu OTP de verificación "+otp);
         message.setText("Tu código OTP es: " + otp + "\nEste código expira en 5 minutos.");
 
         mailSender.send(message);

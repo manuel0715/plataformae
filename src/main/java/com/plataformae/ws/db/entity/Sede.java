@@ -1,5 +1,6 @@
 package com.plataformae.ws.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -20,11 +21,13 @@ public class Sede {
     @Column(length = 255)
     private String direccion;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "rel_universidad_ciudad_id")
     private RelUniversidadCiudad relUniversidadCiudad;
 
-    @OneToMany(mappedBy = "sede", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sede", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<RelSedeCarrera> relSedeCarrera; // Nueva relación
 
     public Long getId() {
@@ -69,11 +72,11 @@ public class Sede {
         this.relUniversidadCiudad = relUniversidadCiudad;
     }
 
-    public List<RelSedeCarrera> getRelSedeCarreras() {
+    public List<RelSedeCarrera> getRelSedeCarrera() {
         return relSedeCarrera;
     }
 
-    public void setRelSedeCarreras(List<RelSedeCarrera> relSedeCarreras) {
+    public void setRelSedeCarrera(List<RelSedeCarrera> relSedeCarreras) {
         this.relSedeCarrera = relSedeCarreras;
     }
 }

@@ -3,7 +3,7 @@ package com.plataformae.ws.dto;
 
 import java.util.List;
 
-public class AuthResponse {
+public class AuthResponseDTO {
 
     private String identificacion;
     private String tipoIdentificacion;

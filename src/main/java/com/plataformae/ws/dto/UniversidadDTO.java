@@ -20,22 +20,14 @@ public class UniversidadDTO {
 
     }
 
-    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad, List<CiudadDTO> ciudades) {
-        this.id = id;
-        this.estado = estado;
-        this.nombre = nombre;
-        this.nit = nit;
-        this.tipoUniversidad = tipoUniversidad;
-        this.ciudades = ciudades;
-    }
-
-    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad) {
+    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad, String logoBase64) {
         this.id = id;
         this.estado = estado;
         this.nombre = nombre;
         this.nit = nit;
         this.tipoUniversidad = tipoUniversidad;
         this.ciudades = new ArrayList<>(); // Inicia vacío por defecto si no se pasan ciudades
+        this.logoBase64=logoBase64;
     }
 
     public Long getId() {

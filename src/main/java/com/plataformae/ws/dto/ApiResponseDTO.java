@@ -1,11 +1,11 @@
 package com.plataformae.ws.dto;
 
-public class ApiResponse<T> {
+public class ApiResponseDTO<T> {
     private String message;
     private T data;
     private int statusCode;
 
-    public ApiResponse(String message, T data, int statusCode) {
+    public ApiResponseDTO(String message, T data, int statusCode) {
         this.message = message;
         this.data = data;
         this.statusCode = statusCode;

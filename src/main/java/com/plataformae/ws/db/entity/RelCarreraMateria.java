@@ -1,5 +1,6 @@
 package com.plataformae.ws.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,11 +10,13 @@ public class RelCarreraMateria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch =FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "carrera_id")
     private Carrera carrera;
 
-    @ManyToOne
+    @ManyToOne(fetch =FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "materia_id")
     private Materia materia;
 

@@ -1,7 +1,5 @@
 package com.plataformae.ws.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
 public class CiudadDTO {

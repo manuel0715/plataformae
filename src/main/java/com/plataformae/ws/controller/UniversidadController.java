@@ -1,9 +1,7 @@
 package com.plataformae.ws.controller;
 
 
-import com.plataformae.ws.db.entity.Universidad;
-import com.plataformae.ws.db.repository.IUniversidadRepository;
-import com.plataformae.ws.dto.ApiResponse;
+import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.dto.UniversidadDTO;
 import com.plataformae.ws.service.IUniversidadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ public class UniversidadController {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<ApiResponse<List<UniversidadDTO>>>  buscarUniversidades(
+    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>>  buscarUniversidades(
             @RequestParam(value = "universidad", required = false) String universidad,
             @RequestParam(value = "ciudad", required = false) String ciudad,
             @RequestParam(value = "carrera", required = false) String carrera,

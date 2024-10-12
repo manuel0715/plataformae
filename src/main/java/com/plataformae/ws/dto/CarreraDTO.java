@@ -42,8 +42,8 @@ public class CarreraDTO {
         this.duracion = duracion;
     }
 
-    public String getTipo(String tipo) {
-        return this.tipo;
+    public String getTipo() {
+        return tipo;
     }
 
     public void setTipo(String tipo) {

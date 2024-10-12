@@ -1,6 +1,6 @@
 package com.plataformae.ws.dto;
 
-public class AuthRequest {
+public class AuthRequestDTO {
     private String username;
     private String password;
     private String type;

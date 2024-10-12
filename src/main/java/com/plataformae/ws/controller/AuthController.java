@@ -2,10 +2,10 @@ package com.plataformae.ws.controller;
 
 import com.plataformae.ws.configuration.MessageConfig;
 import com.plataformae.ws.domain.OtpService;
-import com.plataformae.ws.dto.ApiResponse;
-import com.plataformae.ws.dto.AuthRequest;
-import com.plataformae.ws.dto.AuthResponse;
-import com.plataformae.ws.dto.RestaurarContrasenaRequest;
+import com.plataformae.ws.dto.ApiResponseDTO;
+import com.plataformae.ws.dto.AuthRequestDTO;
+import com.plataformae.ws.dto.AuthResponseDTO;
+import com.plataformae.ws.dto.RestaurarContrasenaRequestDTO;
 import com.plataformae.ws.service.IAuthService;
 import com.plataformae.ws.service.IUsuarioService;
 import org.apache.logging.log4j.LogManager;
@@ -40,11 +40,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<AuthResponse>> login(@RequestBody AuthRequest authRequest) {
-        LOGGER.info("REQUEST /api/auth/login: {}", authRequest.getUsername());
+    public ResponseEntity<ApiResponseDTO<AuthResponseDTO>> login(@RequestBody AuthRequestDTO authRequestDTO) {
+        LOGGER.info("REQUEST /api/auth/login: {}", authRequestDTO.getUsername());
 
         try {
-            if(!iUsuarioService.existeUsuario(authRequest.getUsername())){
+            if(!iUsuarioService.existeUsuario(authRequestDTO.getUsername())){
                 return buildResponse(
                         "Usuario o contraseña invalidos",
                         null,
@@ -52,9 +52,9 @@ public class AuthController {
                 );
             }
 
-            iAuthService.authenticateUser(authRequest);
-            AuthResponse authResponse = iAuthService.createAuthResponse(authRequest);
-            return buildResponse(messageProperties.messageProperties().getLoginExitoso(), authResponse, HttpStatus.OK);
+            iAuthService.authenticateUser(authRequestDTO);
+            AuthResponseDTO authResponseDTO = iAuthService.createAuthResponse(authRequestDTO);
+            return buildResponse(messageProperties.messageProperties().getLoginExitoso(), authResponseDTO, HttpStatus.OK);
         } catch (BadCredentialsException ex) {
             return buildResponse(messageProperties.messageProperties().getCredencialesInvalidas(), null, HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
@@ -64,7 +64,7 @@ public class AuthController {
     }
 
     @PostMapping("/restaurar")
-    public ResponseEntity<ApiResponse<String>>restaurarContrasena(@RequestBody RestaurarContrasenaRequest request) {
+    public ResponseEntity<ApiResponseDTO<String>>restaurarContrasena(@RequestBody RestaurarContrasenaRequestDTO request) {
 
         if(!iUsuarioService.existeUsuario(request.getIdentificacion(),request.getTipoIdentificacion())){
             return buildResponse(

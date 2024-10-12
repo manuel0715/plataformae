@@ -1,6 +1,6 @@
 package com.plataformae.ws.dto;
 
-public class RestaurarContrasenaRequest {
+public class RestaurarContrasenaRequestDTO {
 
     private String identificacion;
     private String tipoIdentificacion;

@@ -2,7 +2,6 @@ package com.plataformae.ws.configuration;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -18,14 +17,11 @@ import java.util.Date;
 public class JwtService {
 
     private final SecretKey secretKey;
-    private final long jwtExpirationInMillis;
 
     // Inyecta la clave secreta y el tiempo de expiración desde application.yml
-    public JwtService(@Value("${jwt.secret}") String secret,
-                      @Value("${jwt.expiration}") long jwtExpirationInMillis) {
+    public JwtService(@Value("${jwt.secret}") String secret) {
         // Decodifica la clave secreta base64 y crea una SecretKey
         this.secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
-        this.jwtExpirationInMillis = jwtExpirationInMillis;
     }
 
     public String extractUsername(String token) {

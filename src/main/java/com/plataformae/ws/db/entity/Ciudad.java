@@ -1,8 +1,7 @@
 package com.plataformae.ws.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "ciudad", schema = "configuracion")
@@ -24,14 +23,10 @@ public class Ciudad {
     @Column(name = "codigo_postal", length = 10)
     private String codigoPostal;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "departamento_id")
     private Departamento departamento;
-
-    @OneToMany(mappedBy = "ciudad", fetch = FetchType.LAZY)
-    private List<RelUniversidadCiudad> relUniversidadCiudades;
-
-
 
     public Long getId() {
         return id;

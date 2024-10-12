@@ -1,7 +1,7 @@
 package com.plataformae.ws.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.plataformae.ws.dto.ApiResponse;
+import com.plataformae.ws.dto.ApiResponseDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -89,8 +89,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void sendErrorResponse(HttpServletResponse response, String message) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        ApiResponse<Object> apiResponse = new ApiResponse<>(message, null, HttpStatus.UNAUTHORIZED.value());
-        String jsonResponse = objectMapper.writeValueAsString(apiResponse);
+        ApiResponseDTO<Object> apiResponseDTO = new ApiResponseDTO<>(message, null, HttpStatus.UNAUTHORIZED.value());
+        String jsonResponse = objectMapper.writeValueAsString(apiResponseDTO);
         response.getWriter().write(jsonResponse);
     }
 }

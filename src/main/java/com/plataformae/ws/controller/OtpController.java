@@ -2,7 +2,7 @@ package com.plataformae.ws.controller;
 
 import com.plataformae.ws.domain.EmailService;
 import com.plataformae.ws.domain.OtpService;
-import com.plataformae.ws.dto.ApiResponse;
+import com.plataformae.ws.dto.ApiResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class OtpController {
     private EmailService emailService;
 
     @PostMapping("/generar")
-    public ResponseEntity<ApiResponse<String>> generateOtp(@RequestParam String email) {
+    public ResponseEntity<ApiResponseDTO<String>> generateOtp(@RequestParam String email){
 
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
              if (!email.matches(regex)){
@@ -50,7 +50,7 @@ public class OtpController {
     }
 
     @PostMapping("/validar")
-    public ResponseEntity<ApiResponse<String>> validateOtp(@RequestParam String otp) {
+    public ResponseEntity<ApiResponseDTO<String>> validateOtp(@RequestParam String otp) {
         boolean isValid = otpService.validateOtp(otp);
         if (isValid) {
             return buildResponse(

@@ -1,5 +1,6 @@
 package com.plataformae.ws.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,7 +37,9 @@ public class Universidad {
     @Column(name = "fecha_ultima_modificacion")
     private LocalDateTime fechaUltimaModificacion = LocalDateTime.of(2000, 1, 1, 0, 0);
 
-    @OneToMany(mappedBy = "universidad", fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "universidad",fetch =FetchType.LAZY)
+    @JsonIgnore
     private List<RelUniversidadCiudad> relUniversidadCiudad;
 
     @Column(name = "logo")
@@ -114,14 +117,6 @@ public class Universidad {
 
     public void setFechaUltimaModificacion(LocalDateTime fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
-    }
-
-    public List<RelUniversidadCiudad> getRelUniversidadCiudades() {
-        return relUniversidadCiudad;
-    }
-
-    public void setRelUniversidadCiudades(List<RelUniversidadCiudad> relUniversidadCiudad) {
-        this.relUniversidadCiudad = relUniversidadCiudad;
     }
 
     public List<RelUniversidadCiudad> getRelUniversidadCiudad() {

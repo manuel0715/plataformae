@@ -1,11 +1,10 @@
 package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.configuration.JwtService;
-import com.plataformae.ws.configuration.MessageConfig;
 import com.plataformae.ws.db.entity.Rol;
 import com.plataformae.ws.db.entity.Usuarios;
-import com.plataformae.ws.dto.AuthRequest;
-import com.plataformae.ws.dto.AuthResponse;
+import com.plataformae.ws.dto.AuthRequestDTO;
+import com.plataformae.ws.dto.AuthResponseDTO;
 import com.plataformae.ws.dto.MenuPadreDTO;
 import com.plataformae.ws.service.IAuthService;
 import com.plataformae.ws.service.IRolService;
@@ -20,7 +19,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AuthServiceImpl implements IAuthService {
@@ -48,40 +46,40 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public void authenticateUser(AuthRequest authRequest) {
+    public void authenticateUser(AuthRequestDTO authRequestDTO) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword())
         );
     }
 
     @Override
-    public AuthResponse createAuthResponse(AuthRequest authRequest) {
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-        AuthResponse authResponse = new AuthResponse();
+    public AuthResponseDTO createAuthResponse(AuthRequestDTO authRequestDTO) {
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequestDTO.getUsername());
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO();
 
         if (userDetails instanceof Usuarios usuarios) {
             String token = jwtService.generateToken(usuarios.getUsername(),secret,jwtExpirationInMillis);
-            authResponse.setIdentificacion(usuarios.getIdentificacion());
-            authResponse.setNombres(usuarios.getNombres());
-            authResponse.setApellidos(usuarios.getApellidos());
-            authResponse.setUsername(usuarios.getUsername());
-            authResponse.setTipoUsuario(usuarios.getTipoUsuario());
-            authResponse.setTipoIdentificacion(usuarios.getTipoIdentificacion());
-            authResponse.setToken(token);
+            authResponseDTO.setIdentificacion(usuarios.getIdentificacion());
+            authResponseDTO.setNombres(usuarios.getNombres());
+            authResponseDTO.setApellidos(usuarios.getApellidos());
+            authResponseDTO.setUsername(usuarios.getUsername());
+            authResponseDTO.setTipoUsuario(usuarios.getTipoUsuario());
+            authResponseDTO.setTipoIdentificacion(usuarios.getTipoIdentificacion());
+            authResponseDTO.setToken(token);
 
-            List<Integer> roleIds = usuarios.getRoles().stream().map(Rol::getId).collect(Collectors.toList());
+            List<Integer> roleIds = usuarios.getRoles().stream().map(Rol::getId).toList();
             List<MenuPadreDTO> menuOpciones = roleService.getMenuByRoles(roleIds);
-            authResponse.setMenuPadre(menuOpciones);
+            authResponseDTO.setMenuPadre(menuOpciones);
         }
-        return authResponse;
+        return authResponseDTO;
     }
 
     @Override
-    public String generarSesionRegistro(AuthRequest authRequest){
+    public String generarSesionRegistro(AuthRequestDTO authRequestDTO){
         try {
-            authenticateUser(authRequest);
-            AuthResponse authResponse = createAuthResponse(authRequest);
-            return  authResponse.getToken();
+            authenticateUser(authRequestDTO);
+            AuthResponseDTO authResponseDTO = createAuthResponse(authRequestDTO);
+            return  authResponseDTO.getToken();
         } catch (Exception ex) {
             LOGGER.error("Error login: {}", ex.getMessage(), ex);
             return "";

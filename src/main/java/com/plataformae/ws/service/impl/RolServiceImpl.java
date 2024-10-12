@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class RolServiceImpl implements IRolService {
@@ -38,7 +37,7 @@ public class RolServiceImpl implements IRolService {
             List<MenuOpcionesDTO> opcionesDTO = opciones.stream()
                     .filter(opcion -> Objects.equals(opcion.getMenuPadre().getId(), padre.getId()))
                     .map(opcion -> new MenuOpcionesDTO(opcion.getId(), opcion.getNombreOpcion(), opcion.getPathOpcion(), opcion.getIcono(), opcion.getOrden()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             if (!opcionesDTO.isEmpty()) {
                 menuDTOList.add(new MenuPadreDTO(padre.getId(), padre.getIcono(), padre.getOrden(), padre.getNombrePadre(), opcionesDTO));

@@ -2,9 +2,8 @@ package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.*;
 import com.plataformae.ws.db.repository.ISedeRepository;
-import com.plataformae.ws.dto.ApiResponse;
+import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.dto.CarreraDTO;
-import com.plataformae.ws.dto.CiudadDTO;
 import com.plataformae.ws.dto.SedeDTO;
 import com.plataformae.ws.service.ISedeService;
 import jakarta.persistence.criteria.Join;
@@ -14,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.plataformae.ws.util.Utils.buildResponse;
 
@@ -33,7 +29,7 @@ public class SedeServiceImpl implements ISedeService {
 
     @Override
     @Transactional
-    public ResponseEntity<ApiResponse<List<SedeDTO>>> obtenerSedes(Long universidadId, Long ciudadId) {
+    public ResponseEntity<ApiResponseDTO<List<SedeDTO>>> obtenerSedes(Long universidadId, Long ciudadId) {
         Specification<Sede> spec = Specification.where(null);
 
         // Filtro por universidad
@@ -67,7 +63,7 @@ public class SedeServiceImpl implements ISedeService {
                     sedeDTO.setDireccion(sede.getDireccion());
 
                     // Mapear las carreras asociadas
-                    List<CarreraDTO> carreraDTOs = sede.getRelSedeCarreras().stream()
+                    List<CarreraDTO> carreraDTOs = sede.getRelSedeCarrera().stream()
                             .map(relSedeCarrera -> {
                                 Carrera carrera = relSedeCarrera.getCarrera();
                                 CarreraDTO carreraDTO = new CarreraDTO();

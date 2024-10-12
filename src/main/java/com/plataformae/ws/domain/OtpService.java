@@ -22,9 +22,6 @@ public class OtpService {
 
     // Validar OTP
     public boolean validateOtp(String inputOtp) {
-        if (inputOtp.equals(generatedOtp) && LocalDateTime.now().isBefore(expiryTime)) {
-            return true;
-        }
-        return false;
+        return inputOtp.equals(generatedOtp) && LocalDateTime.now().isBefore(expiryTime);
     }
 }

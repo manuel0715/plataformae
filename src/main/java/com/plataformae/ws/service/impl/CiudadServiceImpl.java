@@ -2,7 +2,7 @@ package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.Ciudad;
 import com.plataformae.ws.db.repository.ICiudadRepository;
-import com.plataformae.ws.dto.ApiResponse;
+import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.service.ICiudadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class CiudadServiceImpl implements ICiudadService{
     }
 
     @Override
-    public ResponseEntity<ApiResponse<List<Ciudad>>> obtenerTodasLasCiudades() {
+    public ResponseEntity<ApiResponseDTO<List<Ciudad>>> obtenerTodasLasCiudades() {
 
         List<Ciudad>  ciudades =iCiudadRepository.findAll();
 

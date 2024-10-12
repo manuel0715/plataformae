@@ -1,13 +1,13 @@
 package com.plataformae.ws.service;
 
-import com.plataformae.ws.dto.AuthRequest;
-import com.plataformae.ws.dto.AuthResponse;
+import com.plataformae.ws.dto.AuthRequestDTO;
+import com.plataformae.ws.dto.AuthResponseDTO;
 
 public interface IAuthService {
 
-    void authenticateUser(AuthRequest authRequest);
+    void authenticateUser(AuthRequestDTO authRequestDTO);
 
-    AuthResponse createAuthResponse(AuthRequest authRequest);
+    AuthResponseDTO createAuthResponse(AuthRequestDTO authRequestDTO);
 
-    String generarSesionRegistro(AuthRequest authRequest);
+    String generarSesionRegistro(AuthRequestDTO authRequestDTO);
 }

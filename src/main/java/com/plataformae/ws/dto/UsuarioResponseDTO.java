@@ -1,11 +1,8 @@
 package com.plataformae.ws.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-
 import java.time.LocalDateTime;
 
-public class UsuarioResponse {
+public class UsuarioResponseDTO {
 
     private String identificacion;
     private String estado;
@@ -19,8 +16,8 @@ public class UsuarioResponse {
     private LocalDateTime fechaCreacion;
     private String username;
 
-    public UsuarioResponse(String identificacion, String estado, String tipoIdentificacion,
-                           String nombres, String apellidos, String email, String emailMask, String celular, String tipoUsuario, LocalDateTime fechaCreacion, String username) {
+    public UsuarioResponseDTO(String identificacion, String estado, String tipoIdentificacion,
+                              String nombres, String apellidos, String email, String emailMask, String celular, String tipoUsuario, LocalDateTime fechaCreacion, String username) {
         this.identificacion = identificacion;
         this.estado = estado;
         this.tipoIdentificacion = tipoIdentificacion;

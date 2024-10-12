@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,7 +32,7 @@ public class UniversidadServiceImpl implements IUniversidadService {
 
     @Override
     @Transactional
-    public ResponseEntity<ApiResponse<List<UniversidadDTO>>> buscarUniversidades(String universidad, String ciudad, String carr, String sed) {
+    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> buscarUniversidades(String universidad, String ciudad, String carr, String sed) {
         Specification<Universidad> spec = Specification.where(null);
 
         // Filtro por nombre de universidad
@@ -94,7 +93,7 @@ public class UniversidadServiceImpl implements IUniversidadService {
 
 
                     // Mapear ciudades
-                    List<CiudadDTO> ciudadDTOs = uni.getRelUniversidadCiudades().stream()
+                    List<CiudadDTO> ciudadDTOs = uni.getRelUniversidadCiudad().stream()
                             .map(rel -> {
                                 CiudadDTO ciudadDTO = new CiudadDTO();
                                 ciudadDTO.setId(rel.getCiudad().getId());
@@ -104,7 +103,7 @@ public class UniversidadServiceImpl implements IUniversidadService {
                                 ciudadDTO.setAbreviatura(rel.getCiudad().getAbreviatura());
 
                                 // Mapear sedes
-                                List<SedeDTO> sedeDTOs = rel.getSedes().stream()
+                                List<SedeDTO> sedeDTOs = rel.getSede().stream()
                                         .map(sede -> {
                                             SedeDTO sedeDTO = new SedeDTO();
                                             sedeDTO.setId(sede.getId());
@@ -113,7 +112,7 @@ public class UniversidadServiceImpl implements IUniversidadService {
                                             sedeDTO.setDireccion(sede.getDireccion());
 
                                             // Mapear carreras con filtro
-                                            List<CarreraDTO> carreraDTOs = sede.getRelSedeCarreras().stream()
+                                            List<CarreraDTO> carreraDTOs = sede.getRelSedeCarrera().stream()
                                                     .map(RelSedeCarrera::getCarrera)
                                                     .filter(carreraEntity -> {
                                                         if (carrUpper == null || carrUpper.isEmpty()) {
@@ -155,7 +154,7 @@ public class UniversidadServiceImpl implements IUniversidadService {
 
     @Override
     @Transactional
-    public ResponseEntity<ApiResponse<List<UniversidadDTO>>> obtenerUniversidades() {
+    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> obtenerUniversidades() {
         List<Universidad> universidades = universidadRepository.findAllByEstado("");
 
         // Convertimos las entidades a DTO sin ciudades
@@ -172,7 +171,8 @@ public class UniversidadServiceImpl implements IUniversidadService {
                 universidad.getEstado(),
                 universidad.getNombre(),
                 universidad.getNit(),
-                universidad.getTipoUniversidad()
+                universidad.getTipoUniversidad(),
+                imageService.convertirImagenBase64(universidad.getLogo())
         );
     }
 

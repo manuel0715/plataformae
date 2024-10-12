@@ -1,5 +1,6 @@
 package com.plataformae.ws.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -20,9 +21,11 @@ public class Carrera {
     private String nombre;
 
     @OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<RelCarreraMateria> relCarreraMateria;
 
-    @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<RelSedeCarrera> relSedeCarrera; // Nueva relación
 
     private Integer duracion; // duración en semestres

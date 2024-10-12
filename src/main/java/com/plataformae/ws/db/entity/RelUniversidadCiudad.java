@@ -13,16 +13,18 @@ public class RelUniversidadCiudad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch =FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "universidad_id")
     private Universidad universidad;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "ciudad_id")
     private Ciudad ciudad;
 
     @OneToMany(mappedBy = "relUniversidadCiudad", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Sede> sede;
 
     public Long getId() {
@@ -49,11 +51,11 @@ public class RelUniversidadCiudad {
         this.ciudad = ciudad;
     }
 
-    public List<Sede> getSedes() {
+    public List<Sede> getSede() {
         return sede;
     }
 
-    public void setSedes(List<Sede> sede) {
+    public void setSede(List<Sede> sede) {
         this.sede = sede;
     }
 }
