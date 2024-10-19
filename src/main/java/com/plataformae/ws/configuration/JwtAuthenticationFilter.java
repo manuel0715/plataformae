@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper;
 
 
-    @Value("#{'${auth.prefixes}'.split(',')}")
+    @Value("#{'${auth.prefixes.no-token}'.split(',')}")
     private Set<String> prefixes;
 
     public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService, ObjectMapper objectMapper) {
@@ -49,6 +49,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         Set<String> prefixSet = new HashSet<>(prefixes);
 
+        if (path.contains("swagger-ui")|| path.contains("api-docs")){
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         if (prefixSet.stream().anyMatch(path::startsWith)) {
             filterChain.doFilter(request, response);
