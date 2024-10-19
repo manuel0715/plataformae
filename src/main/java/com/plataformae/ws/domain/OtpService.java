@@ -2,6 +2,8 @@ package com.plataformae.ws.domain;
 
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -11,16 +13,20 @@ public class OtpService {
     private String generatedOtp;
     private LocalDateTime expiryTime;
 
+    private final Random rand = SecureRandom.getInstanceStrong();
+
+    public OtpService() throws NoSuchAlgorithmException {
+    }
+
     // Generar OTP
-    public String generateOtp() {
-        Random random = new Random();
-        int otp = 100000 + random.nextInt(900000); // OTP de 6 dígitos
+    public String generateOtp(int otpExpiration) {
+        int rValue = this.rand.nextInt(900000);
+        int otp = 100000 + rValue; // OTP de 6 dígitos
         generatedOtp = String.valueOf(otp);
-        expiryTime = LocalDateTime.now().plusMinutes(5); // Expira en 5 minutos
+        expiryTime = LocalDateTime.now().plusMinutes(otpExpiration);
         return generatedOtp;
     }
 
-    // Validar OTP
     public boolean validateOtp(String inputOtp) {
         return inputOtp.equals(generatedOtp) && LocalDateTime.now().isBefore(expiryTime);
     }

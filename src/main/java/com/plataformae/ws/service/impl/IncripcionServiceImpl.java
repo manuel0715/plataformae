@@ -32,8 +32,19 @@ public class IncripcionServiceImpl implements IInscripcionService {
 
     @Override
     public ResponseEntity<ApiResponseDTO<InscripcionResponseDTO>> guardarInscripcion(InscripcionRequestDTO request) {
-        Inscripciones incripciones = new Inscripciones();
 
+        boolean exist = preInscripcionesRepository.existsByUsuarioAndUniversidadAndCiudadAndSedeAndCarrera(request.getUsuarioId(),
+                request.getUniversidadId(), request.getCiudadId(), request.getSedeId(), request.getCarreraId());
+
+        if (exist){
+            return buildResponse(
+                    "Usuario ya se encuentra registrado para esta carrera",
+                    null,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        Inscripciones incripciones = new Inscripciones();
         InscripcionResponseDTO inscripcionResponseDTO = new InscripcionResponseDTO();
 
         incripciones.setUsuarioId(request.getUsuarioId());

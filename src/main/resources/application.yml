@@ -61,5 +61,8 @@ logging:
       max-file-size: 100MB
       max-history: 1
 
+otp:
+  expiration: 5
+
 auth:
   prefixes: "/api/auth/,/api/usuarios/,/api/otp/,/api/configuracion/"
