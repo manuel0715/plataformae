@@ -1,12 +1,12 @@
 package com.plataformae.ws.controller;
 
 import com.plataformae.ws.db.entity.Ciudad;
+import com.plataformae.ws.db.entity.EstadoContacto;
+import com.plataformae.ws.db.entity.EstadoProceso;
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.dto.SedeDTO;
 import com.plataformae.ws.dto.UniversidadDTO;
-import com.plataformae.ws.service.ICiudadService;
-import com.plataformae.ws.service.ISedeService;
-import com.plataformae.ws.service.IUniversidadService;
+import com.plataformae.ws.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +26,16 @@ public class ConfiguracionController {
     private final ICiudadService iCiudadService;
     private final ISedeService iSedeService;
     private final IUniversidadService iUniversidadService;
+    private final IEstadoContactoService iEstadoContactoService;
+    private final IEstadoProcesoService iEstadoProcesoService;
 
     @Autowired
-    public ConfiguracionController(ICiudadService iCiudadService,  ISedeService iSedeService, IUniversidadService iUniversidadService) {
+    public ConfiguracionController(ICiudadService iCiudadService, ISedeService iSedeService, IUniversidadService iUniversidadService, IEstadoContactoService iEstadoContactoService, IEstadoProcesoService iEstadoProcesoService) {
         this.iCiudadService = iCiudadService;
         this.iSedeService = iSedeService;
         this.iUniversidadService = iUniversidadService;
+        this.iEstadoContactoService = iEstadoContactoService;
+        this.iEstadoProcesoService = iEstadoProcesoService;
     }
 
     @GetMapping("/ciudades")
@@ -60,5 +64,17 @@ public class ConfiguracionController {
             @RequestParam(value = "sede", required = false) String sede) {
 
         return iUniversidadService.buscarUniversidades(universidad, ciudad, carrera,sede);
+    }
+
+    @GetMapping("/estados-proceso")
+    public ResponseEntity<ApiResponseDTO<List<EstadoProceso>>> obtenerEstadosProceso(@RequestParam  Integer estadoContactoId) {
+
+        return iEstadoProcesoService.obtenerEstadosProceso(estadoContactoId);
+    }
+
+    @GetMapping("/estados-contacto")
+    public ResponseEntity<ApiResponseDTO<List<EstadoContacto>>> obtenerEstadosContacto() {
+
+        return iEstadoContactoService.obtenerEstadosContacto();
     }
 }

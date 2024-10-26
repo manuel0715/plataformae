@@ -1,5 +1,6 @@
 package com.plataformae.ws.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,7 @@ public class EstadoProceso {
 
     @ManyToOne
     @JoinColumn(name = "estado_contacto_id")
+    @JsonIgnore
     private EstadoContacto estadoContacto;
 
     public Integer getId() {

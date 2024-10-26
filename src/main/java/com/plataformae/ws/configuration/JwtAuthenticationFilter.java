@@ -2,6 +2,7 @@ package com.plataformae.ws.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plataformae.ws.dto.ApiResponseDTO;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -70,20 +71,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         jwt = authHeader.substring(7);
-        user = jwtService.extractUsername(jwt);
-        if (user != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(user);
-            if (Boolean.TRUE.equals(jwtService.validateToken(jwt, userDetails))) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+        try {
+            // Extraer el username desde el JWT
+            user = jwtService.extractUsername(jwt);
+
+            // Verificar si el usuario no está autenticado ya
+            if (user != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(user);
+
+                // Validar el token JWT
+                if (Boolean.TRUE.equals(jwtService.validateToken(jwt, userDetails))) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                } else {
+                    sendErrorResponse(response, "Token Invalido o expirado");
+                    return;
+                }
             } else {
                 sendErrorResponse(response, "Token Invalido o expirado");
                 return;
             }
-        } else {
-            sendErrorResponse(response, "Token Invalido o expirado");
+
+        } catch (ExpiredJwtException ex) {
+            sendErrorResponse(response, "Token expirado");
             return;
         }
 

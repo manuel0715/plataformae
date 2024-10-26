@@ -22,8 +22,6 @@ public class Usuarios implements UserDetails, Serializable {
     @Serial
     private static final long serialVersionUID = 2405172041950251807L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "identificacion", length = 20, nullable = false)
@@ -68,6 +66,7 @@ public class Usuarios implements UserDetails, Serializable {
     @JsonIgnore
     private LocalDateTime fechaUltimaModificacion;
 
+    @Id
     @Column(unique = true, name = "usuario", nullable = false, length = 15)
     private String username;
 

@@ -12,8 +12,9 @@ public class Inscripciones {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "usuario_id", nullable = false, length = 15)
-    private String usuarioId;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuarios usuarios;
 
     @ManyToOne
     @JoinColumn(name = "universidad_id", nullable = false)
@@ -75,12 +76,12 @@ public class Inscripciones {
         this.id = id;
     }
 
-    public String getUsuarioId() {
-        return usuarioId;
+    public Usuarios getUsuarios() {
+        return usuarios;
     }
 
-    public void setUsuarioId(String usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuarios(Usuarios usuarios) {
+        this.usuarios = usuarios;
     }
 
     public Universidad getUniversidad() {
