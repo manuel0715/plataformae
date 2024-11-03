@@ -9,7 +9,7 @@ import java.util.List;
 public interface IInscripcionService {
     ResponseEntity<ApiResponseDTO<InscripcionResponseDTO>> guardarInscripcion(InscripcionRequestDTO request);
 
-    ResponseEntity<ApiResponseDTO<List<CargarInscripcionResponseDTO>>> cargarMisInscripciones(CargarInscripcionesRequestDTO request);
+    ResponseEntity<ApiResponseDTO<List<CargarInscripcionResponseDTO>>> cargarMisInscripciones();
 
     ResponseEntity<ApiResponseDTO<List<CargarInscripcionResponseDTO>>> cargarInscripciones(LocalDate fechaInicio, LocalDate fechaFin, List<Integer> estadoProcesoIds, List<Integer> estadoContactoIds);
 

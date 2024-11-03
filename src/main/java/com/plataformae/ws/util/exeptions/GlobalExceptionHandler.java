@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import static com.plataformae.ws.util.Utils.buildResponse;
 
@@ -29,6 +30,14 @@ public class GlobalExceptionHandler {
 
         return buildResponse("Ocurrió un error inesperado. Por favor intente de nuevo más tarde.",
                 request,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<ApiResponseDTO<Object>> handleNotFound(NoHandlerFoundException ex) {
+        return buildResponse("Not found.",
+                null,
                 HttpStatus.BAD_REQUEST
         );
     }

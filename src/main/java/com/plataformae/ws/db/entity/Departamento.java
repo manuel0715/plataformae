@@ -19,6 +19,14 @@ public class Departamento {
     @Column(nullable = false, length = 100)
     private String nombre;
 
+    public Departamento(Long id) {
+        this.id = id;
+    }
+
+    public Departamento() {
+
+    }
+
     public Long getId() {
         return id;
     }

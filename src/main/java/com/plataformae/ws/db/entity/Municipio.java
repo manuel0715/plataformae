@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "ciudad", schema = "configuracion")
-public class Ciudad {
+@Table(name = "municipio", schema = "configuracion")
+public class Municipio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,13 @@ public class Ciudad {
     @JsonIgnore
     @JoinColumn(name = "departamento_id")
     private Departamento departamento;
+
+    public Municipio() {
+    }
+
+    public Municipio(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

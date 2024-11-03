@@ -2,7 +2,7 @@ package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.*;
 import com.plataformae.ws.db.repository.IUniversidadRepository;
-import com.plataformae.ws.domain.ImagenService;
+import com.plataformae.ws.domain.Base64Service;
 import com.plataformae.ws.dto.*;
 import com.plataformae.ws.service.IUniversidadService;
 import jakarta.persistence.criteria.Join;
@@ -23,16 +23,16 @@ public class UniversidadServiceImpl implements IUniversidadService {
 
     private final IUniversidadRepository universidadRepository;
 
-    private final ImagenService imageService;
+    private final Base64Service base64Service;
 
-    public UniversidadServiceImpl(IUniversidadRepository universidadRepository, ImagenService imageService) {
+    public UniversidadServiceImpl(IUniversidadRepository universidadRepository, Base64Service base64Service) {
         this.universidadRepository = universidadRepository;
-        this.imageService = imageService;
+        this.base64Service = base64Service;
     }
 
     @Override
     @Transactional
-    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> buscarUniversidades(String universidad, String ciudad, String carr, String sed) {
+    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> buscarUniversidades(String universidad, String municipio, String carr, String sed) {
         Specification<Universidad> spec = Specification.where(null);
 
         // Filtro por nombre de universidad
@@ -45,27 +45,27 @@ public class UniversidadServiceImpl implements IUniversidadService {
         if (sed != null && !sed.isEmpty()) {
             Long sedeId = Long.valueOf(sed);
             spec = spec.and((root, query, criteriaBuilder) -> {
-                Join<Universidad, RelUniversidadCiudad> relJoin = root.join("relUniversidadCiudad");
-                Join<RelUniversidadCiudad, Sede> sedeJoin = relJoin.join("sede");
+                Join<Universidad, RelUniversidadMunicipio> relJoin = root.join("relUniversidadMunicipio");
+                Join<RelUniversidadMunicipio, Sede> sedeJoin = relJoin.join("sede");
                 return criteriaBuilder.equal(sedeJoin.get("id"), sedeId);
             });
         }
 
-        // Filtro por ID de ciudad
-        if (ciudad != null && !ciudad.isEmpty()) {
-            Long ciudadId = Long.valueOf(ciudad);
+        // Filtro por ID de Municipio
+        if (municipio != null && !municipio.isEmpty()) {
+            Long municipioId = Long.valueOf(municipio);
             spec = spec.and((root, query, criteriaBuilder) -> {
-                Join<Universidad, RelUniversidadCiudad> relJoin = root.join("relUniversidadCiudad");
-                Join<RelUniversidadCiudad, Ciudad> ciudadJoin = relJoin.join("ciudad");
-                return criteriaBuilder.equal(ciudadJoin.get("id"), ciudadId);
+                Join<Universidad, RelUniversidadMunicipio> relJoin = root.join("relUniversidadMunicipio");
+                Join<RelUniversidadMunicipio, Municipio> municipioJoin = relJoin.join("municipio");
+                return criteriaBuilder.equal(municipioJoin.get("id"), municipioId);
             });
         }
 
         // Filtro por carrera
         if (carr != null && !carr.isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> {
-                Join<Universidad, RelUniversidadCiudad> relJoin = root.join("relUniversidadCiudad");
-                Join<RelUniversidadCiudad, Sede> sedeJoin = relJoin.join("sede");
+                Join<Universidad, RelUniversidadMunicipio> relJoin = root.join("relUniversidadMunicipio");
+                Join<RelUniversidadMunicipio, Sede> sedeJoin = relJoin.join("sede");
                 Join<Sede, RelSedeCarrera> relSedeCarreraJoin = sedeJoin.join("relSedeCarrera");
                 Join<RelSedeCarrera, Carrera> carreraJoin = relSedeCarreraJoin.join("carrera");
                 query.distinct(true); // Evita duplicados
@@ -89,18 +89,19 @@ public class UniversidadServiceImpl implements IUniversidadService {
                     universidadDTO.setNombre(uni.getNombre());
                     universidadDTO.setNit(uni.getNit());
                     universidadDTO.setTipoUniversidad(uni.getTipoUniversidad());
-                    universidadDTO.setLogoBase64(imageService.convertirImagenBase64(uni.getLogo()));
+                    universidadDTO.setLogoBase64(base64Service.convertirBase64(uni.getLogo()));
+                    universidadDTO.setTerminosCondiciones(base64Service.convertirBase64(uni.getTerminosCondiciones()));
 
 
-                    // Mapear ciudades
-                    List<CiudadDTO> ciudadDTOs = uni.getRelUniversidadCiudad().stream()
+                    // Mapear municipio
+                    List<MunicipioDTO> municipioDTOS = uni.getRelUniversidadMunicipio().stream()
                             .map(rel -> {
-                                CiudadDTO ciudadDTO = new CiudadDTO();
-                                ciudadDTO.setId(rel.getCiudad().getId());
-                                ciudadDTO.setEstado(rel.getCiudad().getEstado());
-                                ciudadDTO.setNombre(rel.getCiudad().getNombre());
-                                ciudadDTO.setCodigoPostal(rel.getCiudad().getCodigoPostal());
-                                ciudadDTO.setAbreviatura(rel.getCiudad().getAbreviatura());
+                                MunicipioDTO municipioDTO = new MunicipioDTO();
+                                municipioDTO.setId(rel.getMunicipio().getId());
+                                municipioDTO.setEstado(rel.getMunicipio().getEstado());
+                                municipioDTO.setNombre(rel.getMunicipio().getNombre());
+                                municipioDTO.setCodigoPostal(rel.getMunicipio().getCodigoPostal());
+                                municipioDTO.setAbreviatura(rel.getMunicipio().getAbreviatura());
 
                                 // Mapear sedes
                                 List<SedeDTO> sedeDTOs = rel.getSede().stream()
@@ -141,11 +142,11 @@ public class UniversidadServiceImpl implements IUniversidadService {
                                         .filter(Objects::nonNull) // Eliminar las sedes nulas
                                         .toList();
 
-                                ciudadDTO.setSedes(sedeDTOs);
-                                return ciudadDTO;
+                                municipioDTO.setSedes(sedeDTOs);
+                                return municipioDTO;
                             }).toList();
 
-                    universidadDTO.setCiudades(ciudadDTOs);
+                    universidadDTO.setMunicipios(municipioDTOS);
                     return universidadDTO;
                 }).toList();
 
@@ -157,7 +158,7 @@ public class UniversidadServiceImpl implements IUniversidadService {
     public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> obtenerUniversidades() {
         List<Universidad> universidades = universidadRepository.findAllByEstado("");
 
-        // Convertimos las entidades a DTO sin ciudades
+        // Convertimos las entidades a DTO sin municipio
         List<UniversidadDTO> universidadDTOs = universidades.stream()
                 .map(this::convertirAUniversidadDTO)
                 .toList();
@@ -172,8 +173,8 @@ public class UniversidadServiceImpl implements IUniversidadService {
                 universidad.getNombre(),
                 universidad.getNit(),
                 universidad.getTipoUniversidad(),
-                imageService.convertirImagenBase64(universidad.getLogo())
-        );
+                base64Service.convertirBase64(universidad.getLogo()),
+                base64Service.convertirBase64(universidad.getTerminosCondiciones()));
     }
 
 }

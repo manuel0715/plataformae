@@ -21,8 +21,8 @@ public class Inscripciones {
     private Universidad universidad;
 
     @ManyToOne
-    @JoinColumn(name = "ciudad_id", nullable = false)
-    private Ciudad ciudad;
+    @JoinColumn(name = "municipio_id", nullable = false)
+    private Municipio municipio;
 
     @ManyToOne
     @JoinColumn(name = "sede_id", nullable = false)
@@ -54,6 +54,12 @@ public class Inscripciones {
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion = LocalDateTime.now();
+
+    @Column(name = "anio_graduacion", nullable = false)
+    private Integer anioGraduacion;
+
+    @Column(name = "semestre_inicio_estudio", nullable = false)
+    private Integer semestreInicioEstudio;
 
     @PrePersist
     private void setDefaultValues() {
@@ -92,12 +98,12 @@ public class Inscripciones {
         this.universidad = universidad;
     }
 
-    public Ciudad getCiudad() {
-        return ciudad;
+    public Municipio getMunicipio() {
+        return municipio;
     }
 
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
     }
 
     public Sede getSede() {
@@ -170,5 +176,21 @@ public class Inscripciones {
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public Integer getAnioGraduacion() {
+        return anioGraduacion;
+    }
+
+    public void setAnioGraduacion(Integer anioGraduacion) {
+        this.anioGraduacion = anioGraduacion;
+    }
+
+    public Integer getSemestreInicioEstudio() {
+        return semestreInicioEstudio;
+    }
+
+    public void setSemestreInicioEstudio(Integer semestreInicioEstudio) {
+        this.semestreInicioEstudio = semestreInicioEstudio;
     }
 }

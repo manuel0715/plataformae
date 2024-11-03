@@ -13,21 +13,23 @@ public class UniversidadDTO {
     private String nit;
     private String tipoUniversidad;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<CiudadDTO> ciudades;
+    private List<MunicipioDTO> municipios;
     private String logoBase64;
+    private String terminosCondiciones;
 
     public UniversidadDTO(){
 
     }
 
-    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad, String logoBase64) {
+    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad, String logoBase64, String terminosCondiciones) {
         this.id = id;
         this.estado = estado;
         this.nombre = nombre;
         this.nit = nit;
         this.tipoUniversidad = tipoUniversidad;
-        this.ciudades = new ArrayList<>(); // Inicia vacío por defecto si no se pasan ciudades
+        this.municipios = new ArrayList<>();
         this.logoBase64=logoBase64;
+        this.terminosCondiciones=terminosCondiciones;
     }
 
     public Long getId() {
@@ -70,12 +72,12 @@ public class UniversidadDTO {
         this.tipoUniversidad = tipoUniversidad;
     }
 
-    public List<CiudadDTO> getCiudades() {
-        return ciudades;
+    public List<MunicipioDTO> getMunicipios() {
+        return municipios;
     }
 
-    public void setCiudades(List<CiudadDTO> ciudades) {
-        this.ciudades = ciudades;
+    public void setMunicipios(List<MunicipioDTO> municipios) {
+        this.municipios = municipios;
     }
 
     public String getLogoBase64() {
@@ -84,5 +86,13 @@ public class UniversidadDTO {
 
     public void setLogoBase64(String logoBase64) {
         this.logoBase64 = logoBase64;
+    }
+
+    public String getTerminosCondiciones() {
+        return terminosCondiciones;
+    }
+
+    public void setTerminosCondiciones(String terminosCondiciones) {
+        this.terminosCondiciones = terminosCondiciones;
     }
 }

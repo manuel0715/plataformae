@@ -1,6 +1,8 @@
 package com.plataformae.ws.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.plataformae.ws.util.IdToEntityDeserializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,8 +25,6 @@ public class Usuarios implements UserDetails, Serializable {
     @Serial
     private static final long serialVersionUID = 2405172041950251807L;
 
-    private Long id;
-
     @Column(name = "identificacion", length = 20, nullable = false)
     private String identificacion;
 
@@ -34,11 +35,45 @@ public class Usuarios implements UserDetails, Serializable {
     @Column(name = "tipo_identificacion", length = 4,  nullable = false )
     private String tipoIdentificacion;
 
-    @Column(name = "nombres", length = 100, nullable = false)
-    private String nombres;
+    @Column(name = "primer_nombre", length = 100, nullable = false)
+    private String primerNombre;
 
-    @Column(name = "apellidos", length = 100, nullable = false)
-    private String apellidos;
+    @Column(name = "segundo_nombre", length = 100)
+    private String segundoNombre;
+
+    @Column(name = "primer_apellido", length = 100, nullable = false)
+    private String primerApellido;
+
+    @Column(name = "segundo_apellido", length = 100)
+    private String segundoApellido;
+
+    @Column(name = "nombre_completo", length = 200, nullable = false)
+    private String nombreCompleto;
+
+    @Column(name = "fecha_expedicion_documento")
+    private LocalDate fechaExpedicionDocumento;
+
+    @Column(name = "fecha_vencimiento_documento")
+    private LocalDate fechaVencimientoDocumento;
+
+    @ManyToOne
+    @JoinColumn(name = "departamento_expedicion_id", nullable = false)
+    private Departamento departamentoExpedicion;
+
+    @ManyToOne
+    @JoinColumn(name = "municipio_expedicion_id", nullable = false)
+    private Municipio municipioExpedicion;
+
+    @Column(name = "fecha_nacimiento")
+    private LocalDate fechaNacimiento;
+
+    @ManyToOne
+    @JoinColumn(name = "departamento_nacimiento_id", nullable = false)
+    private Departamento departamentoNacimiento;
+
+    @ManyToOne
+    @JoinColumn(name = "municipio_nacimiento_id", nullable = false)
+    private Municipio municipioNacimiento;
 
     @Column(name = "email", length = 80, unique = true, nullable = false)
     @NotBlank(message = "El email no puede estar vacío.")
@@ -86,14 +121,6 @@ public class Usuarios implements UserDetails, Serializable {
     @Transient
     private String token;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getIdentificacion() {
         return identificacion;
     }
@@ -118,20 +145,100 @@ public class Usuarios implements UserDetails, Serializable {
         this.tipoIdentificacion = tipoIdentificacion;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getPrimerNombre() {
+        return primerNombre;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre = primerNombre;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getSegundoNombre() {
+        return segundoNombre;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public LocalDate getFechaExpedicionDocumento() {
+        return fechaExpedicionDocumento;
+    }
+
+    public void setFechaExpedicionDocumento(LocalDate fechaExpedicionDocumento) {
+        this.fechaExpedicionDocumento = fechaExpedicionDocumento;
+    }
+
+    public LocalDate getFechaVencimientoDocumento() {
+        return fechaVencimientoDocumento;
+    }
+
+    public void setFechaVencimientoDocumento(LocalDate fechaVencimientoDocumento) {
+        this.fechaVencimientoDocumento = fechaVencimientoDocumento;
+    }
+
+    public Departamento getDepartamentoExpedicion() {
+        return departamentoExpedicion;
+    }
+
+    public void setDepartamentoExpedicion(Departamento departamentoExpedicion) {
+        this.departamentoExpedicion = departamentoExpedicion;
+    }
+
+    public Municipio getMunicipioExpedicion() {
+        return municipioExpedicion;
+    }
+
+    public void setMunicipioExpedicion(Municipio municipioExpedicion) {
+        this.municipioExpedicion = municipioExpedicion;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Departamento getDepartamentoNacimiento() {
+        return departamentoNacimiento;
+    }
+
+    public void setDepartamentoNacimiento(Departamento departamentoNacimiento) {
+        this.departamentoNacimiento = departamentoNacimiento;
+    }
+
+    public Municipio getMunicipioNacimiento() {
+        return municipioNacimiento;
+    }
+
+    public void setMunicipioNacimiento(Municipio municipioNacimiento) {
+        this.municipioNacimiento = municipioNacimiento;
     }
 
     public String getEmail() {

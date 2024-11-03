@@ -5,9 +5,11 @@ import com.plataformae.ws.db.entity.Usuarios;
 import com.plataformae.ws.domain.EmailService;
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.dto.AuthRequestDTO;
+import com.plataformae.ws.dto.RestaurarContrasenaRequestDTO;
 import com.plataformae.ws.dto.UsuarioResponseDTO;
 import com.plataformae.ws.service.IAuthService;
 import com.plataformae.ws.service.IUsuarioService;
+import com.plataformae.ws.util.AuthUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +66,7 @@ public class UsuarioController {
             authRequestDTO.setPassword(nuevoUsuario.getIdentificacion());
             nuevoUsuario.setToken(iAuthService.generarSesionRegistro(authRequestDTO));
 
-            String body="¡Hola " + nuevoUsuario.getNombres() + "!\n\n" +
+            String body="¡Hola " + nuevoUsuario.getPrimerNombre() + "!\n\n" +
                     "Tu registro ha sido exitoso. A continuación, tus credenciales:\n" +
                     "Usuario: " + nuevoUsuario.getUsername() + "\n" +
                     "Contraseña: " + nuevoUsuario.getIdentificacion() + "\n\n" +
@@ -106,8 +108,8 @@ public class UsuarioController {
                 usuario.getIdentificacion(),
                 usuario.getEstado(),
                 usuario.getTipoIdentificacion(),
-                usuario.getNombres(),
-                usuario.getApellidos(),
+                usuario.getPrimerNombre(),
+                usuario.getPrimerApellido(),
                 usuario.getEmail(),
                 maskEmail(usuario.getEmail()),
                 maskPhoneNumber(usuario.getCelular()),
@@ -124,4 +126,5 @@ public class UsuarioController {
 
 
     }
+
 }

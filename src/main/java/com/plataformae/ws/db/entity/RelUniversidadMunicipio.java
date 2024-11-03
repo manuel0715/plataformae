@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "rel_universidad_ciudad", schema = "configuracion")
-public class RelUniversidadCiudad {
+@Table(name = "rel_universidad_municipio", schema = "configuracion")
+public class RelUniversidadMunicipio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +20,10 @@ public class RelUniversidadCiudad {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name = "ciudad_id")
-    private Ciudad ciudad;
+    @JoinColumn(name = "municipio_id")
+    private Municipio municipio;
 
-    @OneToMany(mappedBy = "relUniversidadCiudad", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "relUniversidadMunicipio", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Sede> sede;
 
@@ -43,12 +43,12 @@ public class RelUniversidadCiudad {
         this.universidad = universidad;
     }
 
-    public Ciudad getCiudad() {
-        return ciudad;
+    public Municipio getMunicipio() {
+        return municipio;
     }
 
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
     }
 
     public List<Sede> getSede() {

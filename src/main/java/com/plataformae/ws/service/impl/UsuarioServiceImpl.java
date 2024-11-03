@@ -1,6 +1,8 @@
 package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.Usuarios;
+import com.plataformae.ws.db.repository.IDepartamentoRepository;
+import com.plataformae.ws.db.repository.IMunicipioRepository;
 import com.plataformae.ws.db.repository.IUsuariosRepository;
 import com.plataformae.ws.service.IUsuarioService;
 import com.plataformae.ws.util.exeptions.Exceptions;
@@ -20,11 +22,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     private final IUsuariosRepository iUsuariosRepository;
     private final PasswordEncoder passwordEncoder;
+    private final IDepartamentoRepository departamentoRepository;
+    private final IMunicipioRepository municipioRepository;
 
     @Autowired
-    public UsuarioServiceImpl(PasswordEncoder passwordEncoder, IUsuariosRepository iUsuariosRepository) {
+    public UsuarioServiceImpl(PasswordEncoder passwordEncoder, IUsuariosRepository iUsuariosRepository, IDepartamentoRepository departamentoRepository, IMunicipioRepository municipioRepository) {
         this.iUsuariosRepository = iUsuariosRepository;
         this.passwordEncoder = passwordEncoder;
+        this.departamentoRepository = departamentoRepository;
+        this.municipioRepository = municipioRepository;
     }
 
     @Override

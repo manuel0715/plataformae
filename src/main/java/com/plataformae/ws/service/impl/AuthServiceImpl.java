@@ -60,8 +60,8 @@ public class AuthServiceImpl implements IAuthService {
         if (userDetails instanceof Usuarios usuarios) {
             String token = jwtService.generateToken(usuarios.getUsername(),secret,jwtExpirationInMillis);
             authResponseDTO.setIdentificacion(usuarios.getIdentificacion());
-            authResponseDTO.setNombres(usuarios.getNombres());
-            authResponseDTO.setApellidos(usuarios.getApellidos());
+            authResponseDTO.setNombres(usuarios.getPrimerNombre());
+            authResponseDTO.setApellidos(usuarios.getPrimerApellido());
             authResponseDTO.setUsername(usuarios.getUsername());
             authResponseDTO.setTipoUsuario(usuarios.getTipoUsuario());
             authResponseDTO.setTipoIdentificacion(usuarios.getTipoIdentificacion());

@@ -23,12 +23,12 @@ public class Sede {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name = "rel_universidad_ciudad_id")
-    private RelUniversidadCiudad relUniversidadCiudad;
+    @JoinColumn(name = "rel_universidad_municipio_id")
+    private RelUniversidadMunicipio relUniversidadMunicipio;
 
     @OneToMany(mappedBy = "sede", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<RelSedeCarrera> relSedeCarrera; // Nueva relación
+    private List<RelSedeCarrera> relSedeCarrera;
 
     public Long getId() {
         return id;
@@ -64,12 +64,12 @@ public class Sede {
         this.direccion = direccion;
     }
 
-    public RelUniversidadCiudad getRelUniversidadCiudad() {
-        return relUniversidadCiudad;
+    public RelUniversidadMunicipio getRelUniversidadMunicipio() {
+        return relUniversidadMunicipio;
     }
 
-    public void setRelUniversidadCiudad(RelUniversidadCiudad relUniversidadCiudad) {
-        this.relUniversidadCiudad = relUniversidadCiudad;
+    public void setRelUniversidadMunicipio(RelUniversidadMunicipio relUniversidadMunicipio) {
+        this.relUniversidadMunicipio = relUniversidadMunicipio;
     }
 
     public List<RelSedeCarrera> getRelSedeCarrera() {

@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,13 +17,13 @@ public interface IInscripcionesRepository extends JpaRepository<Inscripciones,In
 
     @Query("SELECT COUNT(i) > 0 FROM Inscripciones i WHERE i.usuarios.username = :usuarioId " +
             "AND i.universidad.id = :universidadId " +
-            "AND i.ciudad.id = :ciudadId " +
+            "AND i.municipio.id = :municipioId " +
             "AND i.sede.id = :sedeId " +
             "AND i.carrera.id = :carreraId")
-    boolean existsByUsuarioAndUniversidadAndCiudadAndSedeAndCarrera(
+    boolean existsByUsuarioAndUniversidadAndMunicipioAndSedeAndCarrera(
             @Param("usuarioId") String usuarioId,
             @Param("universidadId") Integer universidadId,
-            @Param("ciudadId") Integer ciudadId,
+            @Param("municipioId") Integer municipioId,
             @Param("sedeId") Integer sedeId,
             @Param("carreraId") Integer carreraId);
 
@@ -33,31 +32,28 @@ public interface IInscripcionesRepository extends JpaRepository<Inscripciones,In
     @Query("SELECT new com.plataformae.ws.dto.CargarInscripcionResponseDTO(" +
             "i.id, " + // id de la inscripción
             "u2.tipoIdentificacion, " + // tipo de identificación del usuario
-            "u2.nombres, " + // nombres del usuario
-            "u2.apellidos, " + // apellidos del usuario
+            "u2.primerNombre, " + // nombres del usuario
+            "u2.primerApellido, " + // apellidos del usuario
             "u2.celular, " + // celular del usuario
             "u2.email, " + // email del usuario
             "u.nombre, " + // nombre de la universidad
-            "c.nombre, " + // nombre de la ciudad
+            "c.nombre, " + // nombre de la municipio
             "s.nombre, " + // nombre de la sede
             "c2.nombre, " + // nombre de la carrera
             "ep.nombre, " + // nombre del estado de proceso
             "ec.nombre, " + // nombre del estado de contacto
-            "i.fechaCreacion) " + // fecha de creación
+            "i.fechaCreacion,i.anioGraduacion,i.semestreInicioEstudio) " + // fecha de creación
             "FROM Inscripciones i " +
             "JOIN i.usuarios u2 " + // unión con la tabla de usuarios
             "JOIN i.universidad u " + // unión con la tabla de universidad
-            "JOIN i.ciudad c " + // unión con la tabla de ciudad
+            "JOIN i.municipio c " + // unión con la tabla de municipio
             "JOIN i.sede s " + // unión con la tabla de sede
             "JOIN i.carrera c2 " + // unión con la tabla de carrera
             "JOIN i.estadoProceso ep " + // unión con la tabla de estado de proceso
             "JOIN i.estadoContacto ec " + // unión con la tabla de estado de contacto
-            "WHERE i.usuarios.username = :usuarioId " +
-            "AND i.fechaCreacion BETWEEN :fechaInicio AND :fechaFin")
+            "WHERE i.usuarios.username = :usuarioId ")
     List<CargarInscripcionResponseDTO> findInscripcionesByUsuarioIdAndFechaCreacion(
-            @Param("usuarioId") String usuarioId,
-            @Param("fechaInicio") LocalDateTime fechaInicio,
-            @Param("fechaFin") LocalDateTime fechaFin);
+            @Param("usuarioId") String usuarioId);
 
 
 

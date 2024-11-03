@@ -29,24 +29,24 @@ public class SedeServiceImpl implements ISedeService {
 
     @Override
     @Transactional
-    public ResponseEntity<ApiResponseDTO<List<SedeDTO>>> obtenerSedes(Long universidadId, Long ciudadId) {
+    public ResponseEntity<ApiResponseDTO<List<SedeDTO>>> obtenerSedes(Long universidadId, Long municipioId) {
         Specification<Sede> spec = Specification.where(null);
 
         // Filtro por universidad
         if (universidadId != null) {
             spec = spec.and((root, query, criteriaBuilder) -> {
-                Join<Sede, RelUniversidadCiudad> relJoin = root.join("relUniversidadCiudad");
-                Join<RelUniversidadCiudad, Universidad> universidadJoin = relJoin.join("universidad");
+                Join<Sede, RelUniversidadMunicipio> relJoin = root.join("relUniversidadMunicipio");
+                Join<RelUniversidadMunicipio, Universidad> universidadJoin = relJoin.join("universidad");
                 return criteriaBuilder.equal(universidadJoin.get("id"), universidadId);
             });
         }
 
-        // Filtro por ciudad
-        if (ciudadId != null) {
+        // Filtro por Municipio
+        if (municipioId != null) {
             spec = spec.and((root, query, criteriaBuilder) -> {
-                Join<Sede, RelUniversidadCiudad> relJoin = root.join("relUniversidadCiudad");
-                Join<RelUniversidadCiudad, Ciudad> ciudadJoin = relJoin.join("ciudad");
-                return criteriaBuilder.equal(ciudadJoin.get("id"), ciudadId);
+                Join<Sede, RelUniversidadMunicipio> relJoin = root.join("relUniversidadMunicipio");
+                Join<RelUniversidadMunicipio, Municipio> municipioJoin = relJoin.join("municipio");
+                return criteriaBuilder.equal(municipioJoin.get("id"), municipioId);
             });
         }
 

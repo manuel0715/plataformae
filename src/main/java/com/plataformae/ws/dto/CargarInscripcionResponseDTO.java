@@ -6,46 +6,34 @@ public class CargarInscripcionResponseDTO {
 
     private Integer inscripcionId;
     private String tipoIdentificacion;
-    private String nombres;
-    private String apellidos;
+    private String nombreCompleto;
     private String celular;
     private String email;
     private String universidad;
-    private String ciudad;
+    private String municipio;
     private String sede;
     private String carrera;
     private String estadoProceso;
     private String estadoContacto;
     private LocalDateTime fechaCreacion;
+    private Integer anioGraduacion ;
+    private Integer semestreInicioEstudio;
 
-    public CargarInscripcionResponseDTO(Integer inscripcionId, String tipoIdentificacion, String nombres, String apellidos, String celular, String email, String universidad, String ciudad, String sede, String carrera, String estadoProceso, String estadoContacto, LocalDateTime fechaCreacion) {
+    public CargarInscripcionResponseDTO(Integer inscripcionId, String tipoIdentificacion, String nombreCompleto, String apellidos, String celular, String email, String universidad, String municipio, String sede, String carrera, String estadoProceso, String estadoContacto, LocalDateTime fechaCreacion, Integer anioGraduacion, Integer semestreInicioEstudio) {
         this.inscripcionId = inscripcionId;
         this.tipoIdentificacion = tipoIdentificacion;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
+        this.nombreCompleto = nombreCompleto;
         this.celular = celular;
         this.email = email;
         this.universidad = universidad;
-        this.ciudad = ciudad;
+        this.municipio = municipio;
         this.sede = sede;
         this.carrera = carrera;
         this.estadoProceso = estadoProceso;
         this.estadoContacto = estadoContacto;
         this.fechaCreacion = fechaCreacion;
-    }
-
-    public CargarInscripcionResponseDTO(Integer inscripcionId,
-                                        String universidad,
-                                        String ciudad,
-                                        String sede,
-                                        String carrera,
-                                        LocalDateTime fechaCreacion) {
-        this.inscripcionId = inscripcionId;
-        this.universidad = universidad;
-        this.ciudad = ciudad;
-        this.sede = sede;
-        this.carrera = carrera;
-        this.fechaCreacion = fechaCreacion;
+        this.anioGraduacion = anioGraduacion;
+        this.semestreInicioEstudio = semestreInicioEstudio;
     }
 
     public CargarInscripcionResponseDTO() {
@@ -60,20 +48,12 @@ public class CargarInscripcionResponseDTO {
         this.tipoIdentificacion = tipoIdentificacion;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getNombreCompleto() {
+        return nombreCompleto;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public String getCelular() {
@@ -108,12 +88,12 @@ public class CargarInscripcionResponseDTO {
         this.universidad = universidad;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public String getMunicipio() {
+        return municipio;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
     }
 
     public String getSede() {
@@ -154,5 +134,21 @@ public class CargarInscripcionResponseDTO {
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public Integer getAnioGraduacion() {
+        return anioGraduacion;
+    }
+
+    public void setAnioGraduacion(Integer anioGraduacion) {
+        this.anioGraduacion = anioGraduacion;
+    }
+
+    public Integer getSemestreInicioEstudio() {
+        return semestreInicioEstudio;
+    }
+
+    public void setSemestreInicioEstudio(Integer semestreInicioEstudio) {
+        this.semestreInicioEstudio = semestreInicioEstudio;
     }
 }

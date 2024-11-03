@@ -1,6 +1,5 @@
 package com.plataformae.ws.service.impl;
 
-import com.plataformae.ws.db.entity.Ciudad;
 import com.plataformae.ws.db.entity.EstadoContacto;
 import com.plataformae.ws.db.repository.IEstadoContactoRepository;
 import com.plataformae.ws.dto.ApiResponseDTO;

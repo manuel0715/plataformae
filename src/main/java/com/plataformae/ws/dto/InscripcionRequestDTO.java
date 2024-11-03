@@ -4,11 +4,14 @@ public class InscripcionRequestDTO {
 
     private String usuarioId;
     private Integer universidadId;
-    private Integer ciudadId;
+    private Integer municipioId;
     private Integer sedeId;
     private Integer carreraId;
     private Integer estadoProcesoId;
     private Integer estadoContactoId;
+    private Integer anioGraduacion ;
+    private Integer semestreInicioEstudio;
+
 
     public String getUsuarioId() {
         return usuarioId;
@@ -26,12 +29,12 @@ public class InscripcionRequestDTO {
         this.universidadId = universidadId;
     }
 
-    public Integer getCiudadId() {
-        return ciudadId;
+    public Integer getMunicipioId() {
+        return municipioId;
     }
 
-    public void setCiudadId(Integer ciudadId) {
-        this.ciudadId = ciudadId;
+    public void setMunicipioId(Integer municipioId) {
+        this.municipioId = municipioId;
     }
 
     public Integer getSedeId() {
@@ -64,5 +67,21 @@ public class InscripcionRequestDTO {
 
     public void setEstadoContactoId(Integer estadoContactoId) {
         this.estadoContactoId = estadoContactoId;
+    }
+
+    public Integer getAnioGraduacion() {
+        return anioGraduacion;
+    }
+
+    public void setAnioGraduacion(Integer anioGraduacion) {
+        this.anioGraduacion = anioGraduacion;
+    }
+
+    public Integer getSemestreInicioEstudio() {
+        return semestreInicioEstudio;
+    }
+
+    public void setSemestreInicioEstudio(Integer semestreInicioEstudio) {
+        this.semestreInicioEstudio = semestreInicioEstudio;
     }
 }

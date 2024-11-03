@@ -31,11 +31,11 @@ public class InscripcionController {
         return iInscripcionService.guardarInscripcion(request);
     }
 
-    @PostMapping(value = "/cargar-inscripciones-usuario" ,consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(value = "/cargar-inscripciones-usuario",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponseDTO<List<CargarInscripcionResponseDTO>>> cargarMisInscripciones(@RequestBody CargarInscripcionesRequestDTO request) {
+    public ResponseEntity<ApiResponseDTO<List<CargarInscripcionResponseDTO>>> cargarMisInscripciones() {
 
-        return iInscripcionService.cargarMisInscripciones(request);
+        return iInscripcionService.cargarMisInscripciones();
     }
 
     @GetMapping(value = "/cargar",

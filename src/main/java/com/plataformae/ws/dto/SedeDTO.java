@@ -10,15 +10,15 @@ public class SedeDTO {
     private String nombre;
     private String direccion;
     @JsonIgnore
-    private CiudadDTO ciudad;
+    private MunicipioDTO municipio;
     private List<CarreraDTO> carreras;
 
-    public SedeDTO(Long id, String estado, String nombre, String direccion, CiudadDTO ciudad,List<CarreraDTO> carreras) {
+    public SedeDTO(Long id, String estado, String nombre, String direccion, MunicipioDTO municipio, List<CarreraDTO> carreras) {
         this.id = id;
         this.estado = estado;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.ciudad = ciudad;
+        this.municipio = municipio;
         this.carreras = carreras;
     }
 
@@ -61,12 +61,12 @@ public class SedeDTO {
         this.direccion = direccion;
     }
 
-    public CiudadDTO getCiudad() {
-        return ciudad;
+    public MunicipioDTO getMunicipio() {
+        return municipio;
     }
 
-    public void setCiudad(CiudadDTO ciudad) {
-        this.ciudad = ciudad;
+    public void setMunicipio(MunicipioDTO municipio) {
+        this.municipio = municipio;
     }
 
     public List<CarreraDTO> getCarreras() {

@@ -2,7 +2,7 @@ package com.plataformae.ws.dto;
 
 import java.util.List;
 
-public class CiudadDTO {
+public class MunicipioDTO {
     private Long id;
     private String estado;
     private String nombre;
@@ -10,7 +10,7 @@ public class CiudadDTO {
     private String abreviatura;
     private List<SedeDTO> sedes;
 
-    public CiudadDTO(Long id, String estado, String nombre, String codigoPostal, String abreviatura) {
+    public MunicipioDTO(Long id, String estado, String nombre, String codigoPostal, String abreviatura) {
         this.id = id;
         this.estado = estado;
         this.nombre = nombre;
@@ -20,7 +20,7 @@ public class CiudadDTO {
 
 
 
-    public CiudadDTO() {
+    public MunicipioDTO() {
 
     }
 

@@ -3,7 +3,6 @@ package com.plataformae.ws.service.impl;
 import com.plataformae.ws.db.entity.*;
 import com.plataformae.ws.db.repository.*;
 import com.plataformae.ws.dto.*;
-import com.plataformae.ws.service.IEstadoProcesoService;
 import com.plataformae.ws.service.IInscripcionService;
 import com.plataformae.ws.util.AuthUtil;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static com.plataformae.ws.util.Utils.buildResponse;
 
@@ -23,7 +21,7 @@ public class IncripcionServiceImpl implements IInscripcionService {
 
     private final AuthUtil authUtil;
     private final IUniversidadRepository universidadRepository;
-    private final ICiudadRepository ciudadRepository;
+    private final IMunicipioRepository municipioRepository;
     private final ISedeRepository sedeRepository;
     private final ICarreraRepository carreraRepository;
     private final IInscripcionesRepository preInscripcionesRepository;
@@ -33,10 +31,10 @@ public class IncripcionServiceImpl implements IInscripcionService {
     private final IEstadoProcesoRepository estadoProcesoRepository;
     private final IEstadoContactoRepository estadoContactoRepository;
 
-    public IncripcionServiceImpl(AuthUtil authUtil, IUniversidadRepository universidadRepository, ICiudadRepository ciudadRepository, ISedeRepository sedeRepository, ICarreraRepository carreraRepository, IInscripcionesRepository preInscripcionesRepository, InscripcionRepository inscripcionRepository, IUsuariosRepository iUsuariosRepository, ITrazabilidadGestionInscripcionesRepository trazabilidadGestionInscripcionesRepository, IEstadoProcesoRepository estadoProcesoRepository, IEstadoContactoRepository estadoContactoRepository) {
+    public IncripcionServiceImpl(AuthUtil authUtil, IUniversidadRepository universidadRepository, IMunicipioRepository municipioRepository, ISedeRepository sedeRepository, ICarreraRepository carreraRepository, IInscripcionesRepository preInscripcionesRepository, InscripcionRepository inscripcionRepository, IUsuariosRepository iUsuariosRepository, ITrazabilidadGestionInscripcionesRepository trazabilidadGestionInscripcionesRepository, IEstadoProcesoRepository estadoProcesoRepository, IEstadoContactoRepository estadoContactoRepository) {
         this.authUtil = authUtil;
         this.universidadRepository = universidadRepository;
-        this.ciudadRepository = ciudadRepository;
+        this.municipioRepository = municipioRepository;
         this.sedeRepository = sedeRepository;
         this.carreraRepository = carreraRepository;
         this.preInscripcionesRepository = preInscripcionesRepository;
@@ -51,8 +49,8 @@ public class IncripcionServiceImpl implements IInscripcionService {
     @Override
     public ResponseEntity<ApiResponseDTO<InscripcionResponseDTO>> guardarInscripcion(InscripcionRequestDTO request) {
 
-        boolean exist = preInscripcionesRepository.existsByUsuarioAndUniversidadAndCiudadAndSedeAndCarrera(request.getUsuarioId(),
-                request.getUniversidadId(), request.getCiudadId(), request.getSedeId(), request.getCarreraId());
+        boolean exist = preInscripcionesRepository.existsByUsuarioAndUniversidadAndMunicipioAndSedeAndCarrera(request.getUsuarioId(),
+                request.getUniversidadId(), request.getMunicipioId(), request.getSedeId(), request.getCarreraId());
 
         if (exist){
             return buildResponse(
@@ -73,9 +71,9 @@ public class IncripcionServiceImpl implements IInscripcionService {
         incripciones.setUniversidad(universidad);
 
 
-        Ciudad ciudad = ciudadRepository.findById(request.getCiudadId())
-                .orElseThrow(() -> new RuntimeException("Ciudad no encontrada"));
-        incripciones.setCiudad(ciudad);
+        Municipio municipio = municipioRepository.findById(request.getMunicipioId())
+                .orElseThrow(() -> new RuntimeException("Municipio no encontrado"));
+        incripciones.setMunicipio(municipio);
 
         Sede sede = sedeRepository.findById(request.getSedeId())
                 .orElseThrow(() -> new RuntimeException("Sede no encontrada"));
@@ -85,10 +83,14 @@ public class IncripcionServiceImpl implements IInscripcionService {
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
         incripciones.setCarrera(carrera);
 
+        incripciones.setAnioGraduacion(request.getAnioGraduacion());
+        incripciones.setSemestreInicioEstudio(request.getSemestreInicioEstudio());
+
 
         inscripcionResponseDTO.setUsuario(request.getUsuarioId());
         inscripcionResponseDTO.setUniversidad(incripciones.getUniversidad().getNombre());
         inscripcionResponseDTO.setCarrera(incripciones.getCarrera().getNombre());
+
 
         preInscripcionesRepository.save(incripciones);
 
@@ -97,10 +99,10 @@ public class IncripcionServiceImpl implements IInscripcionService {
     }
 
     @Override
-    public ResponseEntity<ApiResponseDTO<List<CargarInscripcionResponseDTO>>> cargarMisInscripciones(CargarInscripcionesRequestDTO request) {
+    public ResponseEntity<ApiResponseDTO<List<CargarInscripcionResponseDTO>>> cargarMisInscripciones() {
 
 
-        List<CargarInscripcionResponseDTO> list = preInscripcionesRepository.findInscripcionesByUsuarioIdAndFechaCreacion(authUtil.getAuthenticatedUser(),request.getFechaInicio().atStartOfDay(),request.getFechaFin().atTime(23, 59, 59));
+        List<CargarInscripcionResponseDTO> list = preInscripcionesRepository.findInscripcionesByUsuarioIdAndFechaCreacion(authUtil.getAuthenticatedUser());
         return buildResponse("Ok",list,HttpStatus.OK);
     }
 

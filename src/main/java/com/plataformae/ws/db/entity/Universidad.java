@@ -37,15 +37,15 @@ public class Universidad {
     @Column(name = "fecha_ultima_modificacion")
     private LocalDateTime fechaUltimaModificacion = LocalDateTime.of(2000, 1, 1, 0, 0);
 
-
     @OneToMany(mappedBy = "universidad",fetch =FetchType.LAZY)
     @JsonIgnore
-    private List<RelUniversidadCiudad> relUniversidadCiudad;
+    private List<RelUniversidadMunicipio> relUniversidadMunicipio;
 
     @Column(name = "logo")
     private String logo = "";
 
-
+    @Column(name = "terminos_condiciones")
+    private String terminosCondiciones = "";
 
     public Long getId() {
         return id;
@@ -119,12 +119,12 @@ public class Universidad {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
-    public List<RelUniversidadCiudad> getRelUniversidadCiudad() {
-        return relUniversidadCiudad;
+    public List<RelUniversidadMunicipio> getRelUniversidadMunicipio() {
+        return relUniversidadMunicipio;
     }
 
-    public void setRelUniversidadCiudad(List<RelUniversidadCiudad> relUniversidadCiudad) {
-        this.relUniversidadCiudad = relUniversidadCiudad;
+    public void setRelUniversidadMunicipio(List<RelUniversidadMunicipio> relUniversidadMunicipio) {
+        this.relUniversidadMunicipio = relUniversidadMunicipio;
     }
 
     public String getLogo() {
@@ -133,5 +133,13 @@ public class Universidad {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public String getTerminosCondiciones() {
+        return terminosCondiciones;
+    }
+
+    public void setTerminosCondiciones(String terminosCondiciones) {
+        this.terminosCondiciones = terminosCondiciones;
     }
 }

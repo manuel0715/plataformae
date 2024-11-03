@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ISedeService {
 
-    ResponseEntity<ApiResponseDTO<List<SedeDTO>>> obtenerSedes(Long universidadId, Long ciudadId);
+    ResponseEntity<ApiResponseDTO<List<SedeDTO>>> obtenerSedes(Long universidadId, Long municipioId);
 }

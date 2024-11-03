@@ -4,6 +4,8 @@ springdoc:
 
 server:
   port: 7000
+  error:
+    include-stacktrace: never
 spring:
   application:
     name: plataformae
@@ -70,4 +72,4 @@ otp:
 
 auth:
   prefixes:
-    no-token: "/api/auth/,/api/otp/,/v3/api-docs/"
+    no-token: "/api/auth/,/api/usuarios/,/api/otp/,/v3/api-docs/"
