@@ -42,7 +42,6 @@ spring:
 jwt:
   secret: "kaS1ElkVdZs9e6Z2mdeFK4jCddtSKZvNZi/yMZtUBzc="
   expiration: 604800000
-  email-expiration: 86400000
 
 app:
   messages:
@@ -72,4 +71,4 @@ otp:
 
 auth:
   prefixes:
-    no-token: "/api/auth/,/api/usuarios/,/api/otp/,/v3/api-docs/"
+    no-token: "/api/auth/,/api/usuarios/,/api/configuracion/public/,/api/otp/,/v3/api-docs/"

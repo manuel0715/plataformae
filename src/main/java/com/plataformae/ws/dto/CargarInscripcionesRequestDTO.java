@@ -1,7 +1,6 @@
 package com.plataformae.ws.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class CargarInscripcionesRequestDTO {
 

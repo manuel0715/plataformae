@@ -19,7 +19,7 @@ public class CargarInscripcionResponseDTO {
     private Integer anioGraduacion ;
     private Integer semestreInicioEstudio;
 
-    public CargarInscripcionResponseDTO(Integer inscripcionId, String tipoIdentificacion, String nombreCompleto, String apellidos, String celular, String email, String universidad, String municipio, String sede, String carrera, String estadoProceso, String estadoContacto, LocalDateTime fechaCreacion, Integer anioGraduacion, Integer semestreInicioEstudio) {
+    public CargarInscripcionResponseDTO(Integer inscripcionId, String tipoIdentificacion, String nombreCompleto, String celular, String email, String universidad, String municipio, String sede, String carrera, String estadoProceso, String estadoContacto, LocalDateTime fechaCreacion, Integer anioGraduacion, Integer semestreInicioEstudio) {
         this.inscripcionId = inscripcionId;
         this.tipoIdentificacion = tipoIdentificacion;
         this.nombreCompleto = nombreCompleto;

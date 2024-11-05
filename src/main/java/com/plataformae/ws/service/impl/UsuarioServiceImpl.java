@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.regex.Pattern;
 
@@ -22,15 +23,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     private final IUsuariosRepository iUsuariosRepository;
     private final PasswordEncoder passwordEncoder;
-    private final IDepartamentoRepository departamentoRepository;
-    private final IMunicipioRepository municipioRepository;
 
     @Autowired
-    public UsuarioServiceImpl(PasswordEncoder passwordEncoder, IUsuariosRepository iUsuariosRepository, IDepartamentoRepository departamentoRepository, IMunicipioRepository municipioRepository) {
+    public UsuarioServiceImpl(PasswordEncoder passwordEncoder, IUsuariosRepository iUsuariosRepository) {
         this.iUsuariosRepository = iUsuariosRepository;
         this.passwordEncoder = passwordEncoder;
-        this.departamentoRepository = departamentoRepository;
-        this.municipioRepository = municipioRepository;
     }
 
     @Override
@@ -99,6 +96,25 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public int updatePasword(String username, String password) {
         return iUsuariosRepository.updatePasword(username,passwordEncoder.encode(password));
+    }
+
+
+    @Transactional
+    @Override
+    public Usuarios actualizarPerfil(String authenticatedUser, Usuarios request) {
+         iUsuariosRepository.updatePerfilUsuario(request.getPrimerNombre(), request.getSegundoNombre(),request.getPrimerApellido(),request.getSegundoApellido(),
+                request.getNombreCompleto(),request.getFechaExpedicionDocumento(),request.getFechaVencimientoDocumento(),
+                request.getDepartamentoExpedicion().getId().intValue(),request.getMunicipioExpedicion().getId().intValue(),request.getFechaNacimiento(),
+                request.getDepartamentoNacimiento().getId().intValue(),request.getMunicipioNacimiento().getId().intValue(),request.getEmail(),request.getCelular()
+                ,authenticatedUser);
+
+         return iUsuariosRepository.findByUsername(authenticatedUser);
+
+    }
+
+    @Override
+    public Usuarios cargarInformacionPerfil(String authenticatedUser) {
+        return iUsuariosRepository.findByUsername(authenticatedUser);
     }
 
 }

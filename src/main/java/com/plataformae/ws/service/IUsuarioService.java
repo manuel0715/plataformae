@@ -17,4 +17,7 @@ public interface IUsuarioService {
 
     public boolean existeUsuario(String usuario);
 
+    Usuarios actualizarPerfil(String authenticatedUser, Usuarios request);
+
+    Usuarios cargarInformacionPerfil(String authenticatedUser);
 }

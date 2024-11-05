@@ -24,7 +24,7 @@ public class InscripcionController {
         this.iTrazabilidadGestionInscripcionesService = iTrazabilidadGestionInscripcionesService;
     }
 
-    @PostMapping(value = "/guardar" ,consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(value = "/guardar", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponseDTO<InscripcionResponseDTO>> guardarInscripcion(@RequestBody InscripcionRequestDTO request) {
 
@@ -51,13 +51,21 @@ public class InscripcionController {
         if (estadoContactoIds == null) {
             estadoContactoIds = new ArrayList<>();
         }
-        return iInscripcionService.cargarInscripciones(fechaInicio,fechaFin,estadoProcesoIds,estadoContactoIds);
+        return iInscripcionService.cargarInscripciones(fechaInicio, fechaFin, estadoProcesoIds, estadoContactoIds);
     }
 
-    @PostMapping(value = "/guardar-gestion" ,consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(value = "/guardar-gestion", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponseDTO<String>> guardarGestionInscripcion(@RequestBody GuardarGestionIncripcionDTO request) {
 
         return iInscripcionService.guardarGestionInscripcion(request);
+    }
+
+    @GetMapping(value = "/cargar-trazabilidad-gestion",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponseDTO<List<TrazabilidadResponseDTO>>> cargarInscripciones(@RequestParam int incripcionId) {
+
+        return iTrazabilidadGestionInscripcionesService.cargarTrazabilidad(incripcionId);
+
     }
 }

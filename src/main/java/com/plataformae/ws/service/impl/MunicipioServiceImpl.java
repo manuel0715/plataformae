@@ -1,14 +1,11 @@
 package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.Departamento;
-import com.plataformae.ws.db.entity.EstadoContacto;
-import com.plataformae.ws.db.entity.EstadoProceso;
 import com.plataformae.ws.db.entity.Municipio;
 import com.plataformae.ws.db.repository.IDepartamentoRepository;
 import com.plataformae.ws.db.repository.IMunicipioRepository;
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.service.IMunicipioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

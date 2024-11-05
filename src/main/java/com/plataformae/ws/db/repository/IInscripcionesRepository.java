@@ -32,8 +32,7 @@ public interface IInscripcionesRepository extends JpaRepository<Inscripciones,In
     @Query("SELECT new com.plataformae.ws.dto.CargarInscripcionResponseDTO(" +
             "i.id, " + // id de la inscripción
             "u2.tipoIdentificacion, " + // tipo de identificación del usuario
-            "u2.primerNombre, " + // nombres del usuario
-            "u2.primerApellido, " + // apellidos del usuario
+            "u2.nombreCompleto, " + // nombres del usuario
             "u2.celular, " + // celular del usuario
             "u2.email, " + // email del usuario
             "u.nombre, " + // nombre de la universidad

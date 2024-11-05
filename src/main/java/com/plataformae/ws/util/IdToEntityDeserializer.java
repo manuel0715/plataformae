@@ -3,7 +3,6 @@ package com.plataformae.ws.util;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.plataformae.ws.db.entity.Departamento;
 import com.plataformae.ws.db.entity.Municipio;
 
@@ -22,9 +21,5 @@ public class IdToEntityDeserializer extends JsonDeserializer<Object> {
             return municipio;
         }
         return null;
-    }
-
-    public IdToEntityDeserializer() {
-
     }
 }

@@ -40,25 +40,25 @@ public class ConfiguracionController {
         this.iGeneroService = iGeneroService;
     }
 
-    @GetMapping("/municipios")
+    @GetMapping("/public/municipios")
     public ResponseEntity<ApiResponseDTO<List<Municipio>>> obtenerMunicipios(@RequestParam  Integer departamentoId) {
 
         return iMunicipioService.obtenerMunicipio(departamentoId);
     }
 
-    @GetMapping("/departamentos")
+    @GetMapping("/public/departamentos")
     public ResponseEntity<ApiResponseDTO<List<Departamento>>> obtenerDepartametos() {
 
         return iDepartamentoService.obtenerDepartamentos();
     }
 
-    @GetMapping("/generos")
+    @GetMapping("/public/generos")
     public ResponseEntity<ApiResponseDTO<List<Genero>>> obtenerGeneros() {
 
         return iGeneroService.obtenerGenero();
     }
 
-    @GetMapping("/sedes")
+    @GetMapping("/public/sedes")
     public ResponseEntity<ApiResponseDTO<List<SedeDTO>>> obtenerSedes(@RequestParam(required = false) Long municipio ,
                                                                       @RequestParam(required = false) Long universidad) {
         return iSedeService.obtenerSedes(universidad,municipio);

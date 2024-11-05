@@ -11,11 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/universidad")
 public class UniversidadController {
 
-    private final IUniversidadService universidadService;
-
-    @Autowired
-    public UniversidadController(IUniversidadService universidadService) {
-        this.universidadService = universidadService;
-    }
 
 }
