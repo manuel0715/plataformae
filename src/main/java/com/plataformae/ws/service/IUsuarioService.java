@@ -1,6 +1,10 @@
 package com.plataformae.ws.service;
 
 import com.plataformae.ws.db.entity.Usuarios;
+import com.plataformae.ws.dto.ApiResponsePageDTO;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface IUsuarioService {
     public boolean existeUsuario(String identificacion, String tipoDocumento);
@@ -20,4 +24,6 @@ public interface IUsuarioService {
     Usuarios actualizarPerfil(String authenticatedUser, Usuarios request);
 
     Usuarios cargarInformacionPerfil(String authenticatedUser);
+
+    ResponseEntity<ApiResponsePageDTO<List<Usuarios>>> cargarUsuarios(int page, int size);
 }

@@ -1,4 +1,4 @@
-package com.plataformae.ws.db.repository;
+package com.plataformae.ws.db.repository.jpa;
 
 import com.plataformae.ws.dto.CargarInscripcionResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,6 @@ public class InscripcionRepository {
                 " u2.email, \n" +
                 " u.nombre AS universidad,\n" +
                 " c.nombre AS municipio,\n" +
-                " s.nombre AS sede,\n" +
                 " c2.nombre AS carrera, \n" +
                 " ep.nombre AS estado_proceso,\n" +
                 " ec.nombre AS estado_contacto,\n" +
@@ -32,7 +31,6 @@ public class InscripcionRepository {
                 " INNER JOIN administrativo.usuarios u2 ON u2.usuario = i.usuario_id \n" +
                 " INNER JOIN configuracion.universidad u ON u.id = i.universidad_id \n" +
                 " INNER JOIN configuracion.municipio c ON c.id = i.municipio_id \n" +
-                " INNER JOIN configuracion.sede s ON s.id = i.sede_id \n" +
                 " INNER JOIN configuracion.carrera c2 ON c2.id = i.carrera_id\n" +
                 " INNER JOIN configuracion.estado_proceso ep ON ep.id = i.estado_proceso_id \n" +
                 " INNER JOIN configuracion.estado_contacto ec ON ec.id = i.estado_contacto_id \n" +
@@ -62,7 +60,6 @@ public class InscripcionRepository {
             dto.setEmail(rs.getString("email"));
             dto.setUniversidad(rs.getString("universidad"));
             dto.setMunicipio(rs.getString("municipio"));
-            dto.setSede(rs.getString("sede"));
             dto.setCarrera(rs.getString("carrera"));
             dto.setEstadoProceso(rs.getString("estado_proceso"));
             dto.setEstadoContacto(rs.getString("estado_contacto"));

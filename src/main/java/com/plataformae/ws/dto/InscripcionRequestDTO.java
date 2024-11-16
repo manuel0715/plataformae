@@ -5,10 +5,9 @@ public class InscripcionRequestDTO {
     private String usuarioId;
     private Integer universidadId;
     private Integer municipioId;
-    private Integer sedeId;
     private Integer carreraId;
-    private Integer estadoProcesoId;
-    private Integer estadoContactoId;
+    private Integer estadoProcesoId=6;
+    private Integer estadoContactoId=1;
     private Integer anioGraduacion ;
     private Integer semestreInicioEstudio;
 
@@ -35,14 +34,6 @@ public class InscripcionRequestDTO {
 
     public void setMunicipioId(Integer municipioId) {
         this.municipioId = municipioId;
-    }
-
-    public Integer getSedeId() {
-        return sedeId;
-    }
-
-    public void setSedeId(Integer sedeId) {
-        this.sedeId = sedeId;
     }
 
     public Integer getCarreraId() {

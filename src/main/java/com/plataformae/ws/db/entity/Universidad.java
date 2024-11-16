@@ -39,13 +39,19 @@ public class Universidad {
 
     @OneToMany(mappedBy = "universidad",fetch =FetchType.LAZY)
     @JsonIgnore
-    private List<RelUniversidadMunicipio> relUniversidadMunicipio;
+    private List<RelCarreraUniversidadMunicipio> relCarreraUniversidadMunicipio;
 
     @Column(name = "logo")
     private String logo = "";
 
     @Column(name = "terminos_condiciones")
     private String terminosCondiciones = "";
+
+    @Column(name = "direccion")
+    private String direccion = "";
+
+    @Column(name = "telefono")
+    private String telefono = "";
 
     public Long getId() {
         return id;
@@ -119,12 +125,12 @@ public class Universidad {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
-    public List<RelUniversidadMunicipio> getRelUniversidadMunicipio() {
-        return relUniversidadMunicipio;
+    public List<RelCarreraUniversidadMunicipio> getRelUniversidadMunicipio() {
+        return relCarreraUniversidadMunicipio;
     }
 
-    public void setRelUniversidadMunicipio(List<RelUniversidadMunicipio> relUniversidadMunicipio) {
-        this.relUniversidadMunicipio = relUniversidadMunicipio;
+    public void setRelUniversidadMunicipio(List<RelCarreraUniversidadMunicipio> relCarreraUniversidadMunicipio) {
+        this.relCarreraUniversidadMunicipio = relCarreraUniversidadMunicipio;
     }
 
     public String getLogo() {
@@ -141,5 +147,29 @@ public class Universidad {
 
     public void setTerminosCondiciones(String terminosCondiciones) {
         this.terminosCondiciones = terminosCondiciones;
+    }
+
+    public List<RelCarreraUniversidadMunicipio> getRelCarreraUniversidadMunicipio() {
+        return relCarreraUniversidadMunicipio;
+    }
+
+    public void setRelCarreraUniversidadMunicipio(List<RelCarreraUniversidadMunicipio> relCarreraUniversidadMunicipio) {
+        this.relCarreraUniversidadMunicipio = relCarreraUniversidadMunicipio;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

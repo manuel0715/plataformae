@@ -1,7 +1,7 @@
 package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.*;
-import com.plataformae.ws.db.repository.*;
+import com.plataformae.ws.db.repository.jpa.*;
 import com.plataformae.ws.dto.*;
 import com.plataformae.ws.service.IInscripcionService;
 import com.plataformae.ws.util.AuthUtil;
@@ -22,8 +22,7 @@ public class IncripcionServiceImpl implements IInscripcionService {
     private final AuthUtil authUtil;
     private final IUniversidadRepository universidadRepository;
     private final IMunicipioRepository municipioRepository;
-    private final ISedeRepository sedeRepository;
-    private final ICarreraRepository carreraRepository;
+    private final ICarreraJpaRepository carreraRepository;
     private final IInscripcionesRepository preInscripcionesRepository;
     private final InscripcionRepository inscripcionRepository;
     private final IUsuariosRepository iUsuariosRepository;
@@ -31,11 +30,10 @@ public class IncripcionServiceImpl implements IInscripcionService {
     private final IEstadoProcesoRepository estadoProcesoRepository;
     private final IEstadoContactoRepository estadoContactoRepository;
 
-    public IncripcionServiceImpl(AuthUtil authUtil, IUniversidadRepository universidadRepository, IMunicipioRepository municipioRepository, ISedeRepository sedeRepository, ICarreraRepository carreraRepository, IInscripcionesRepository preInscripcionesRepository, InscripcionRepository inscripcionRepository, IUsuariosRepository iUsuariosRepository, ITrazabilidadGestionInscripcionesRepository trazabilidadGestionInscripcionesRepository, IEstadoProcesoRepository estadoProcesoRepository, IEstadoContactoRepository estadoContactoRepository) {
+    public IncripcionServiceImpl(AuthUtil authUtil, IUniversidadRepository universidadRepository, IMunicipioRepository municipioRepository, ICarreraJpaRepository carreraRepository, IInscripcionesRepository preInscripcionesRepository, InscripcionRepository inscripcionRepository, IUsuariosRepository iUsuariosRepository, ITrazabilidadGestionInscripcionesRepository trazabilidadGestionInscripcionesRepository, IEstadoProcesoRepository estadoProcesoRepository, IEstadoContactoRepository estadoContactoRepository) {
         this.authUtil = authUtil;
         this.universidadRepository = universidadRepository;
         this.municipioRepository = municipioRepository;
-        this.sedeRepository = sedeRepository;
         this.carreraRepository = carreraRepository;
         this.preInscripcionesRepository = preInscripcionesRepository;
         this.inscripcionRepository = inscripcionRepository;
@@ -49,8 +47,8 @@ public class IncripcionServiceImpl implements IInscripcionService {
     @Override
     public ResponseEntity<ApiResponseDTO<InscripcionResponseDTO>> guardarInscripcion(InscripcionRequestDTO request) {
 
-        boolean exist = preInscripcionesRepository.existsByUsuarioAndUniversidadAndMunicipioAndSedeAndCarrera(request.getUsuarioId(),
-                request.getUniversidadId(), request.getMunicipioId(), request.getSedeId(), request.getCarreraId());
+        boolean exist = preInscripcionesRepository.existsByUsuarioAndUniversidadAndMunicipioAndCarrera(request.getUsuarioId(),
+                request.getUniversidadId(), request.getMunicipioId(),request.getCarreraId());
 
         if (exist){
             return buildResponse(
@@ -75,16 +73,18 @@ public class IncripcionServiceImpl implements IInscripcionService {
                 .orElseThrow(() -> new RuntimeException("Municipio no encontrado"));
         incripciones.setMunicipio(municipio);
 
-        Sede sede = sedeRepository.findById(request.getSedeId())
-                .orElseThrow(() -> new RuntimeException("Sede no encontrada"));
-        incripciones.setSede(sede);
-
-        Carrera carrera = carreraRepository.findById(request.getCarreraId())
+        Carrera carrera = carreraRepository.findById(request.getCarreraId().longValue())
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
         incripciones.setCarrera(carrera);
 
         incripciones.setAnioGraduacion(request.getAnioGraduacion());
         incripciones.setSemestreInicioEstudio(request.getSemestreInicioEstudio());
+        EstadoContacto estadoContacto= new EstadoContacto();
+        estadoContacto.setId(1);
+        EstadoProceso estadoProceso = new EstadoProceso();
+        estadoProceso.setId(6);
+        incripciones.setEstadoContacto(estadoContacto);
+        incripciones.setEstadoProceso(estadoProceso);
 
 
         inscripcionResponseDTO.setUsuario(request.getUsuarioId());

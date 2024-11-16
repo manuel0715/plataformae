@@ -8,7 +8,6 @@ public class MunicipioDTO {
     private String nombre;
     private String codigoPostal;
     private String abreviatura;
-    private List<SedeDTO> sedes;
 
     public MunicipioDTO(Long id, String estado, String nombre, String codigoPostal, String abreviatura) {
         this.id = id;
@@ -65,12 +64,5 @@ public class MunicipioDTO {
         this.abreviatura = abreviatura;
     }
 
-    public List<SedeDTO> getSedes() {
-        return sedes;
-    }
-
-    public void setSedes(List<SedeDTO> sedes) {
-        this.sedes = sedes;
-    }
 }
 

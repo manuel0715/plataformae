@@ -11,7 +11,6 @@ public class CargarInscripcionResponseDTO {
     private String email;
     private String universidad;
     private String municipio;
-    private String sede;
     private String carrera;
     private String estadoProceso;
     private String estadoContacto;
@@ -19,7 +18,7 @@ public class CargarInscripcionResponseDTO {
     private Integer anioGraduacion ;
     private Integer semestreInicioEstudio;
 
-    public CargarInscripcionResponseDTO(Integer inscripcionId, String tipoIdentificacion, String nombreCompleto, String celular, String email, String universidad, String municipio, String sede, String carrera, String estadoProceso, String estadoContacto, LocalDateTime fechaCreacion, Integer anioGraduacion, Integer semestreInicioEstudio) {
+    public CargarInscripcionResponseDTO(Integer inscripcionId, String tipoIdentificacion, String nombreCompleto, String celular, String email, String universidad, String municipio, String carrera, String estadoProceso, String estadoContacto, LocalDateTime fechaCreacion, Integer anioGraduacion, Integer semestreInicioEstudio) {
         this.inscripcionId = inscripcionId;
         this.tipoIdentificacion = tipoIdentificacion;
         this.nombreCompleto = nombreCompleto;
@@ -27,7 +26,6 @@ public class CargarInscripcionResponseDTO {
         this.email = email;
         this.universidad = universidad;
         this.municipio = municipio;
-        this.sede = sede;
         this.carrera = carrera;
         this.estadoProceso = estadoProceso;
         this.estadoContacto = estadoContacto;
@@ -94,14 +92,6 @@ public class CargarInscripcionResponseDTO {
 
     public void setMunicipio(String municipio) {
         this.municipio = municipio;
-    }
-
-    public String getSede() {
-        return sede;
-    }
-
-    public void setSede(String sede) {
-        this.sede = sede;
     }
 
     public String getCarrera() {

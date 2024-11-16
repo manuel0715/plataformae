@@ -1,20 +1,30 @@
 package com.plataformae.ws.service.impl;
 
+import com.plataformae.ws.db.entity.Rol;
 import com.plataformae.ws.db.entity.Usuarios;
-import com.plataformae.ws.db.repository.IDepartamentoRepository;
-import com.plataformae.ws.db.repository.IMunicipioRepository;
-import com.plataformae.ws.db.repository.IUsuariosRepository;
+import com.plataformae.ws.db.repository.jpa.IUsuariosRepository;
+import com.plataformae.ws.dto.ApiResponsePageDTO;
 import com.plataformae.ws.service.IUsuarioService;
 import com.plataformae.ws.util.exeptions.Exceptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
+
+import static com.plataformae.ws.util.Utils.buildResponse;
+import static com.plataformae.ws.util.Utils.buildResponsePage;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
@@ -70,10 +80,23 @@ public class UsuarioServiceImpl implements IUsuarioService {
             throw new IllegalArgumentException("El número celular debe ser válido (ejemplo: 3001234567).");
         }
 
-        String userName = usuario.getTipoIdentificacion()+usuario.getIdentificacion();
+        String userName = usuario.getIdentificacion();
         usuario.setUsername(userName);
         usuario.setPassword(passwordEncoder.encode(usuario.getIdentificacion()));
         usuario.setUsuarioCreador(userName);
+
+        Rol rol = new Rol();
+        if (usuario.getTipoUsuario().equals("E")){
+            rol.setId(2);
+            Set<Rol> roles = new HashSet<>();
+            roles.add(rol);
+            usuario.setRoles(roles);
+        }else{
+            rol.setId(1);
+            Set<Rol> roles = new HashSet<>();
+            roles.add(rol);
+            usuario.setRoles(roles);
+        }
 
         try {
             return iUsuariosRepository.save(usuario);
@@ -115,6 +138,18 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public Usuarios cargarInformacionPerfil(String authenticatedUser) {
         return iUsuariosRepository.findByUsername(authenticatedUser);
+    }
+
+    @Override
+    public ResponseEntity<ApiResponsePageDTO<List<Usuarios>>> cargarUsuarios(int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        Page<Usuarios> usuariosPage = iUsuariosRepository.findAll(pageRequest);
+
+        List<Usuarios> list = usuariosPage.getContent();
+
+        return buildResponsePage("Ok",list, HttpStatus.OK,usuariosPage.getTotalElements(),usuariosPage.getTotalPages());
     }
 
 }

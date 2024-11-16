@@ -3,11 +3,9 @@ package com.plataformae.ws.db.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
-@Table(name = "rel_universidad_municipio", schema = "configuracion")
-public class RelUniversidadMunicipio {
+@Table(name = "rel_carrera_universidad_municipio", schema = "configuracion")
+public class RelCarreraUniversidadMunicipio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +21,10 @@ public class RelUniversidadMunicipio {
     @JoinColumn(name = "municipio_id")
     private Municipio municipio;
 
-    @OneToMany(mappedBy = "relUniversidadMunicipio", fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Sede> sede;
+    @JoinColumn(name = "carrera_id")
+    private Carrera carrera;
 
     public Long getId() {
         return id;
@@ -51,11 +50,11 @@ public class RelUniversidadMunicipio {
         this.municipio = municipio;
     }
 
-    public List<Sede> getSede() {
-        return sede;
+    public Carrera getCarrera() {
+        return carrera;
     }
 
-    public void setSede(List<Sede> sede) {
-        this.sede = sede;
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
     }
 }

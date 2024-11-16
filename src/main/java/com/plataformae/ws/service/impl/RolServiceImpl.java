@@ -2,8 +2,8 @@ package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.MenuOpciones;
 import com.plataformae.ws.db.entity.MenuPadre;
-import com.plataformae.ws.db.repository.IMenuPadreRepository;
-import com.plataformae.ws.db.repository.IRelOpcionesMenuRolesRepository;
+import com.plataformae.ws.db.repository.jpa.IMenuPadreRepository;
+import com.plataformae.ws.db.repository.jpa.IRelOpcionesMenuRolesRepository;
 import com.plataformae.ws.dto.MenuOpcionesDTO;
 import com.plataformae.ws.dto.MenuPadreDTO;
 import com.plataformae.ws.service.IRolService;

@@ -1,7 +1,7 @@
 package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.Genero;
-import com.plataformae.ws.db.repository.IGeneroRepository;
+import com.plataformae.ws.db.repository.jpa.IGeneroRepository;
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.service.IGeneroService;
 import org.springframework.http.HttpStatus;

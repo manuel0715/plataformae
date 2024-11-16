@@ -2,8 +2,8 @@ package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.EstadoContacto;
 import com.plataformae.ws.db.entity.EstadoProceso;
-import com.plataformae.ws.db.repository.IEstadoContactoRepository;
-import com.plataformae.ws.db.repository.IEstadoProcesoRepository;
+import com.plataformae.ws.db.repository.jpa.IEstadoContactoRepository;
+import com.plataformae.ws.db.repository.jpa.IEstadoProcesoRepository;
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.service.IEstadoProcesoService;
 import org.springframework.http.HttpStatus;

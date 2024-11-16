@@ -1,4 +1,4 @@
-package com.plataformae.ws.db.repository;
+package com.plataformae.ws.db.repository.jpa;
 
 import com.plataformae.ws.db.entity.EstadoContacto;
 import com.plataformae.ws.db.entity.EstadoProceso;
@@ -18,13 +18,11 @@ public interface IInscripcionesRepository extends JpaRepository<Inscripciones,In
     @Query("SELECT COUNT(i) > 0 FROM Inscripciones i WHERE i.usuarios.username = :usuarioId " +
             "AND i.universidad.id = :universidadId " +
             "AND i.municipio.id = :municipioId " +
-            "AND i.sede.id = :sedeId " +
             "AND i.carrera.id = :carreraId")
-    boolean existsByUsuarioAndUniversidadAndMunicipioAndSedeAndCarrera(
+    boolean existsByUsuarioAndUniversidadAndMunicipioAndCarrera(
             @Param("usuarioId") String usuarioId,
             @Param("universidadId") Integer universidadId,
             @Param("municipioId") Integer municipioId,
-            @Param("sedeId") Integer sedeId,
             @Param("carreraId") Integer carreraId);
 
 
@@ -37,7 +35,6 @@ public interface IInscripcionesRepository extends JpaRepository<Inscripciones,In
             "u2.email, " + // email del usuario
             "u.nombre, " + // nombre de la universidad
             "c.nombre, " + // nombre de la municipio
-            "s.nombre, " + // nombre de la sede
             "c2.nombre, " + // nombre de la carrera
             "ep.nombre, " + // nombre del estado de proceso
             "ec.nombre, " + // nombre del estado de contacto
@@ -46,7 +43,6 @@ public interface IInscripcionesRepository extends JpaRepository<Inscripciones,In
             "JOIN i.usuarios u2 " + // unión con la tabla de usuarios
             "JOIN i.universidad u " + // unión con la tabla de universidad
             "JOIN i.municipio c " + // unión con la tabla de municipio
-            "JOIN i.sede s " + // unión con la tabla de sede
             "JOIN i.carrera c2 " + // unión con la tabla de carrera
             "JOIN i.estadoProceso ep " + // unión con la tabla de estado de proceso
             "JOIN i.estadoContacto ec " + // unión con la tabla de estado de contacto

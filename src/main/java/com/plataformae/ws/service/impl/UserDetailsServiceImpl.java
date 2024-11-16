@@ -2,8 +2,7 @@ package com.plataformae.ws.service.impl;
 
 
 import com.plataformae.ws.db.entity.Usuarios;
-import com.plataformae.ws.db.repository.IUsuariosRepository;
-import org.hibernate.Hibernate;
+import com.plataformae.ws.db.repository.jpa.IUsuariosRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -22,13 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public Usuarios loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuarios usuario = iUsuariosRepository.findByUsername(username);
 
-        if (usuario != null) {
-            // Forzar la inicialización de la colección de roles
-            Hibernate.initialize(usuario.getRoles());
-        }
-
-        return usuario;
+        return iUsuariosRepository.findByUsername(username);
     }
 }

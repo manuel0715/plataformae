@@ -3,8 +3,7 @@ package com.plataformae.ws.dto;
 public class MateriaDTO {
     private Long id;
     private String nombre;
-    private CarreraDTO carrera;  // Relación ManyToOne
-    private SedeDTO sede;
+    private CarreraDTO carrera;
 
     public Long getId() {
         return id;
@@ -30,11 +29,5 @@ public class MateriaDTO {
         this.carrera = carrera;
     }
 
-    public SedeDTO getSede() {
-        return sede;
-    }
 
-    public void setSede(SedeDTO sede) {
-        this.sede = sede;
-    }
 }

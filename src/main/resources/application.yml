@@ -67,8 +67,13 @@ logging:
       max-history: 1
 
 otp:
-  expiration: 5
+  expiration: 1
 
 auth:
   prefixes:
     no-token: "/api/auth/,/api/usuarios/,/api/configuracion/public/,/api/otp/,/v3/api-docs/"
+
+
+parameters:
+  terminos-y-condiciones:
+    plataforma-e: "/root/services/plataformae/backend/resources/terminos_y_condiciones/terminos_y_condiciones_plataformae.pdf"

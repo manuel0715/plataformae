@@ -2,10 +2,12 @@ package com.plataformae.ws.controller;
 
 import com.plataformae.ws.db.entity.*;
 import com.plataformae.ws.dto.ApiResponseDTO;
-import com.plataformae.ws.dto.SedeDTO;
+import com.plataformae.ws.dto.CarreraUniversidadResponseDTO;
 import com.plataformae.ws.dto.UniversidadDTO;
 import com.plataformae.ws.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,16 +15,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
+import static com.plataformae.ws.util.Utils.buildResponse;
+import static com.plataformae.ws.util.Utils.convertirBase64;
 
 
 @RestController
 @RequestMapping("/api/configuracion")
 public class ConfiguracionController {
 
+    @Value("${parameters.terminos-y-condiciones.plataforma-e}")
+    private String pathTerminosYCondiciones;
 
     private final IMunicipioService iMunicipioService;
-    private final ISedeService iSedeService;
     private final IUniversidadService iUniversidadService;
     private final IEstadoContactoService iEstadoContactoService;
     private final IEstadoProcesoService iEstadoProcesoService;
@@ -30,9 +36,8 @@ public class ConfiguracionController {
     private final IGeneroService iGeneroService;
 
     @Autowired
-    public ConfiguracionController(IMunicipioService iMunicipioService, ISedeService iSedeService, IUniversidadService iUniversidadService, IEstadoContactoService iEstadoContactoService, IEstadoProcesoService iEstadoProcesoService, IDepartamentoService iDepartamentoService, IGeneroService iGeneroService) {
+    public ConfiguracionController(IMunicipioService iMunicipioService, IUniversidadService iUniversidadService, IEstadoContactoService iEstadoContactoService, IEstadoProcesoService iEstadoProcesoService, IDepartamentoService iDepartamentoService, IGeneroService iGeneroService) {
         this.iMunicipioService = iMunicipioService;
-        this.iSedeService = iSedeService;
         this.iUniversidadService = iUniversidadService;
         this.iEstadoContactoService = iEstadoContactoService;
         this.iEstadoProcesoService = iEstadoProcesoService;
@@ -58,26 +63,10 @@ public class ConfiguracionController {
         return iGeneroService.obtenerGenero();
     }
 
-    @GetMapping("/public/sedes")
-    public ResponseEntity<ApiResponseDTO<List<SedeDTO>>> obtenerSedes(@RequestParam(required = false) Long municipio ,
-                                                                      @RequestParam(required = false) Long universidad) {
-        return iSedeService.obtenerSedes(universidad,municipio);
-    }
-
     @GetMapping("/universidades")
-    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> obtenerUniversidades() {
+    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> obtenerUniversidades( @RequestParam(required = false) String nit) {
 
-        return iUniversidadService.obtenerUniversidades();
-    }
-
-    @GetMapping("/buscar")
-    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>>  buscarUniversidades(
-            @RequestParam(value = "universidad", required = false) String universidad,
-            @RequestParam(value = "municipio", required = false) String municipio,
-            @RequestParam(value = "carrera", required = false) String carrera,
-            @RequestParam(value = "sede", required = false) String sede) {
-
-        return iUniversidadService.buscarUniversidades(universidad, municipio, carrera,sede);
+        return iUniversidadService.obtenerUniversidades(nit);
     }
 
     @GetMapping("/estados-proceso")
@@ -90,5 +79,20 @@ public class ConfiguracionController {
     public ResponseEntity<ApiResponseDTO<List<EstadoContacto>>> obtenerEstadosContacto() {
 
         return iEstadoContactoService.obtenerEstadosContacto();
+    }
+
+    @GetMapping("/public/terminos-y-condiciones")
+    public ResponseEntity<ApiResponseDTO<String>> obtenerTerminosYCondiciones() {
+
+
+        return buildResponse("Ok", convertirBase64(pathTerminosYCondiciones), HttpStatus.OK);
+    }
+
+    @GetMapping("public/programas-academicos")
+    public ResponseEntity<ApiResponseDTO<List<CarreraUniversidadResponseDTO>>>  buscarCarreras(
+            @RequestParam(value = "filtro", required = false) String filtro,
+            @RequestParam(value = "universidad", required = false) Integer  universidad) {
+
+        return iUniversidadService.buscarCarreras(filtro,universidad);
     }
 }

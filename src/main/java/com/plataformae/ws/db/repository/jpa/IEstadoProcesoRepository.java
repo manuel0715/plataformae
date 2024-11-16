@@ -1,4 +1,4 @@
-package com.plataformae.ws.db.repository;
+package com.plataformae.ws.db.repository.jpa;
 
 import com.plataformae.ws.db.entity.EstadoContacto;
 import com.plataformae.ws.db.entity.EstadoProceso;

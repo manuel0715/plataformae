@@ -4,6 +4,7 @@ import com.plataformae.ws.configuration.MessageConfig;
 import com.plataformae.ws.db.entity.Usuarios;
 import com.plataformae.ws.domain.EmailService;
 import com.plataformae.ws.dto.ApiResponseDTO;
+import com.plataformae.ws.dto.ApiResponsePageDTO;
 import com.plataformae.ws.dto.AuthRequestDTO;
 import com.plataformae.ws.dto.UsuarioResponseDTO;
 import com.plataformae.ws.service.IAuthService;
@@ -14,10 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.plataformae.ws.util.Utils.*;
 
@@ -123,6 +123,14 @@ public class UsuarioController {
                 );
 
 
+    }
+
+    @GetMapping(value = "/cargar-usuarios" ,consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponsePageDTO<List<Usuarios>>> CargarUsuarios(@RequestParam(defaultValue = "0") int page,
+                                                                             @RequestParam(defaultValue = "10") int size){
+
+        return usuarioService.cargarUsuarios(page,size);
     }
 
 }

@@ -25,10 +25,6 @@ public class Inscripciones {
     private Municipio municipio;
 
     @ManyToOne
-    @JoinColumn(name = "sede_id", nullable = false)
-    private Sede sede;
-
-    @ManyToOne
     @JoinColumn(name = "carrera_id", nullable = false)
     private Carrera carrera;
 
@@ -106,13 +102,6 @@ public class Inscripciones {
         this.municipio = municipio;
     }
 
-    public Sede getSede() {
-        return sede;
-    }
-
-    public void setSede(Sede sede) {
-        this.sede = sede;
-    }
 
     public Carrera getCarrera() {
         return carrera;
