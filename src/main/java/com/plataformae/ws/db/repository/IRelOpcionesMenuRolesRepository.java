@@ -1,4 +1,4 @@
-package com.plataformae.ws.db.repository.jpa;
+package com.plataformae.ws.db.repository;
 
 import com.plataformae.ws.db.entity.MenuOpciones;
 import com.plataformae.ws.db.entity.RelOpcionesMenuRoles;

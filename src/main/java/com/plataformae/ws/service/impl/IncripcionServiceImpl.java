@@ -1,7 +1,7 @@
 package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.*;
-import com.plataformae.ws.db.repository.jpa.*;
+import com.plataformae.ws.db.repository.*;
 import com.plataformae.ws.dto.*;
 import com.plataformae.ws.service.IInscripcionService;
 import com.plataformae.ws.util.AuthUtil;

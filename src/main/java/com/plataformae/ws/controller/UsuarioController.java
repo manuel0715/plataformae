@@ -127,7 +127,7 @@ public class UsuarioController {
 
     @GetMapping(value = "/cargar-usuarios" ,consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponsePageDTO<List<Usuarios>>> CargarUsuarios(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<ApiResponsePageDTO<List<Usuarios>>> cargarUsuarios(@RequestParam(defaultValue = "0") int page,
                                                                              @RequestParam(defaultValue = "10") int size){
 
         return usuarioService.cargarUsuarios(page,size);

@@ -37,7 +37,7 @@ public class Universidad {
     @Column(name = "fecha_ultima_modificacion")
     private LocalDateTime fechaUltimaModificacion = LocalDateTime.of(2000, 1, 1, 0, 0);
 
-    @OneToMany(mappedBy = "universidad",fetch =FetchType.LAZY)
+    @OneToMany(mappedBy = "universidad")
     @JsonIgnore
     private List<RelCarreraUniversidadMunicipio> relCarreraUniversidadMunicipio;
 

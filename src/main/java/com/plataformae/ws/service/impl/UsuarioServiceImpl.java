@@ -2,7 +2,7 @@ package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.Rol;
 import com.plataformae.ws.db.entity.Usuarios;
-import com.plataformae.ws.db.repository.jpa.IUsuariosRepository;
+import com.plataformae.ws.db.repository.IUsuariosRepository;
 import com.plataformae.ws.dto.ApiResponsePageDTO;
 import com.plataformae.ws.service.IUsuarioService;
 import com.plataformae.ws.util.exeptions.Exceptions;
@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import static com.plataformae.ws.util.Utils.buildResponse;
 import static com.plataformae.ws.util.Utils.buildResponsePage;
 
 @Service

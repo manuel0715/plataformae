@@ -2,7 +2,7 @@ package com.plataformae.ws.service.impl;
 
 
 import com.plataformae.ws.db.entity.Usuarios;
-import com.plataformae.ws.db.repository.jpa.IUsuariosRepository;
+import com.plataformae.ws.db.repository.IUsuariosRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

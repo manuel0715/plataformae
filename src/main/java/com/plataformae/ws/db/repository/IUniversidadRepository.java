@@ -1,11 +1,8 @@
-package com.plataformae.ws.db.repository.jpa;
+package com.plataformae.ws.db.repository;
 
 import com.plataformae.ws.db.entity.Universidad;
-import com.plataformae.ws.dto.CarreraUniversidadResponseDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,5 +14,7 @@ public interface IUniversidadRepository extends JpaRepository<Universidad, Integ
     public List<Universidad> findAllByEstado(String estado);
 
     public List<Universidad> findByNit(String nit);
+
+    public List<Universidad> findAllByNitAndEstado(String nit,String estado);
 
 }

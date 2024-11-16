@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 import static com.plataformae.ws.util.Utils.buildResponse;
 import static com.plataformae.ws.util.Utils.convertirBase64;
@@ -34,15 +33,17 @@ public class ConfiguracionController {
     private final IEstadoProcesoService iEstadoProcesoService;
     private final IDepartamentoService iDepartamentoService;
     private final IGeneroService iGeneroService;
+    private final IModalidadService iModalidadService;
 
     @Autowired
-    public ConfiguracionController(IMunicipioService iMunicipioService, IUniversidadService iUniversidadService, IEstadoContactoService iEstadoContactoService, IEstadoProcesoService iEstadoProcesoService, IDepartamentoService iDepartamentoService, IGeneroService iGeneroService) {
+    public ConfiguracionController(IMunicipioService iMunicipioService, IUniversidadService iUniversidadService, IEstadoContactoService iEstadoContactoService, IEstadoProcesoService iEstadoProcesoService, IDepartamentoService iDepartamentoService, IGeneroService iGeneroService, IModalidadService iModalidadService) {
         this.iMunicipioService = iMunicipioService;
         this.iUniversidadService = iUniversidadService;
         this.iEstadoContactoService = iEstadoContactoService;
         this.iEstadoProcesoService = iEstadoProcesoService;
         this.iDepartamentoService = iDepartamentoService;
         this.iGeneroService = iGeneroService;
+        this.iModalidadService = iModalidadService;
     }
 
     @GetMapping("/public/municipios")
@@ -64,9 +65,10 @@ public class ConfiguracionController {
     }
 
     @GetMapping("/universidades")
-    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> obtenerUniversidades( @RequestParam(required = false) String nit) {
+    public ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> obtenerUniversidades( @RequestParam(required = false) String nit,
+                                                                                      @RequestParam(required = false) String estado) {
 
-        return iUniversidadService.obtenerUniversidades(nit);
+        return iUniversidadService.obtenerUniversidades(nit,estado);
     }
 
     @GetMapping("/estados-proceso")
@@ -91,8 +93,15 @@ public class ConfiguracionController {
     @GetMapping("public/programas-academicos")
     public ResponseEntity<ApiResponseDTO<List<CarreraUniversidadResponseDTO>>>  buscarCarreras(
             @RequestParam(value = "filtro", required = false) String filtro,
-            @RequestParam(value = "universidad", required = false) Integer  universidad) {
+            @RequestParam(value = "universidad", required = false) Integer  universidad,
+            @RequestParam(value = "modalidad", required = false) Integer  modalidad) {
 
-        return iUniversidadService.buscarCarreras(filtro,universidad);
+        return iUniversidadService.buscarCarreras(filtro,universidad,modalidad);
+    }
+
+    @GetMapping("/modalidad")
+    public ResponseEntity<ApiResponseDTO<List<Modalidad>>> obtenerModalidad() {
+
+        return iModalidadService.obtenerModalidad();
     }
 }

@@ -2,8 +2,8 @@ package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.Departamento;
 import com.plataformae.ws.db.entity.Municipio;
-import com.plataformae.ws.db.repository.jpa.IDepartamentoRepository;
-import com.plataformae.ws.db.repository.jpa.IMunicipioRepository;
+import com.plataformae.ws.db.repository.IDepartamentoRepository;
+import com.plataformae.ws.db.repository.IMunicipioRepository;
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.service.IMunicipioService;
 import org.springframework.http.HttpStatus;

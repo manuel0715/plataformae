@@ -1,4 +1,4 @@
-package com.plataformae.ws.db.repository.jpa;
+package com.plataformae.ws.db.repository;
 
 
 import com.plataformae.ws.dto.CarreraUniversidadResponseDTO;
@@ -19,7 +19,7 @@ public class BuscarCarreraRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public List<CarreraUniversidadResponseDTO> buscarCarreras(String query, Integer universidad) {
+    public List<CarreraUniversidadResponseDTO> buscarCarreras(String query, Integer universidad, Integer modalidad) {
         StringBuilder sql = new StringBuilder("""
         SELECT
             u.id AS universidad_id,
@@ -38,12 +38,13 @@ public class BuscarCarreraRepository {
             rcum.valor_semestre,
             rcum.titulo_otorgado,
             rcum.duracion,
-            rcum.modalidad
+            mo.nombre as modalidad
         FROM configuracion.rel_carrera_universidad_municipio rcum
         INNER JOIN configuracion.universidad u ON u.id = rcum.universidad_id
         INNER JOIN configuracion.municipio m ON m.id = rcum.municipio_id
         INNER JOIN configuracion.departamento d ON d.id = m.departamento_id
         INNER JOIN configuracion.carrera c ON c.id = rcum.carrera_id
+        INNER JOIN configuracion.modalidad mo ON mo.id=rcum.modalidad_id
         WHERE 1=1
     """);
 
@@ -52,7 +53,7 @@ public class BuscarCarreraRepository {
 
         // Verificar si 'query' es proporcionado
         if (query != null && !query.trim().isEmpty()) {
-            sql.append(" AND (SIMILARITY(rcum.texto_busqueda, :query) > 0.05 OR rcum.texto_busqueda ILIKE '%' || :query || '%')");
+            sql.append(" AND (SIMILARITY(rcum.texto_busqueda, :query) > 0.1 OR rcum.texto_busqueda ILIKE '%' || :query || '%')");
             params.put("query", query);
         }
 
@@ -60,6 +61,11 @@ public class BuscarCarreraRepository {
         if (universidad != null) {
             sql.append(" AND u.id = :universidad");
             params.put("universidad", universidad);
+        }
+
+        if (modalidad != null) {
+            sql.append(" AND mo.id = :modalidad");
+            params.put("modalidad", modalidad);
         }
 
         // Ordenar por similitud de búsqueda, si se proporcionó 'query'

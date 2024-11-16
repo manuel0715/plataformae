@@ -16,12 +16,16 @@ public class UniversidadDTO {
     private List<MunicipioDTO> municipios;
     private String logoBase64;
     private String terminosCondiciones;
+    private String direccion;
+    private String telefono;
+
 
     public UniversidadDTO(){
 
     }
 
-    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad, String logoBase64, String terminosCondiciones) {
+    public UniversidadDTO(Long id, String estado, String nombre, String nit, String tipoUniversidad,
+                          String logoBase64, String terminosCondiciones,String direccion,String telefono) {
         this.id = id;
         this.estado = estado;
         this.nombre = nombre;
@@ -30,6 +34,8 @@ public class UniversidadDTO {
         this.municipios = new ArrayList<>();
         this.logoBase64=logoBase64;
         this.terminosCondiciones=terminosCondiciones;
+        this. direccion = direccion;
+        this.telefono = telefono;
     }
 
     public Long getId() {
@@ -94,5 +100,21 @@ public class UniversidadDTO {
 
     public void setTerminosCondiciones(String terminosCondiciones) {
         this.terminosCondiciones = terminosCondiciones;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

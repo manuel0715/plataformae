@@ -1,7 +1,5 @@
 package com.plataformae.ws.dto;
 
-import java.util.List;
-
 public class MunicipioDTO {
     private Long id;
     private String estado;

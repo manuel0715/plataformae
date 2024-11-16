@@ -1,7 +1,7 @@
 package com.plataformae.ws.service.impl;
 
 import com.plataformae.ws.db.entity.EstadoContacto;
-import com.plataformae.ws.db.repository.jpa.IEstadoContactoRepository;
+import com.plataformae.ws.db.repository.IEstadoContactoRepository;
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.service.IEstadoContactoService;
 import org.springframework.beans.factory.annotation.Autowired;

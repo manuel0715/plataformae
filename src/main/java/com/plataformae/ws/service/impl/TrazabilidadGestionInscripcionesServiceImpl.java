@@ -1,6 +1,6 @@
 package com.plataformae.ws.service.impl;
 
-import com.plataformae.ws.db.repository.jpa.ITrazabilidadGestionInscripcionesRepository;
+import com.plataformae.ws.db.repository.ITrazabilidadGestionInscripcionesRepository;
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.dto.TrazabilidadResponseDTO;
 import com.plataformae.ws.service.ITrazabilidadGestionInscripcionesService;
