@@ -16,6 +16,9 @@ public class Modalidad {
     @Column(nullable = false)
     private String nombre;
 
+    @Column(nullable = false)
+    private String color;
+
     public Long getId() {
         return id;
     }
@@ -38,5 +41,13 @@ public class Modalidad {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -28,7 +28,7 @@ public class MunicipioServiceImpl implements IMunicipioService {
     }
 
     @Override
-    public ResponseEntity<ApiResponseDTO<List<Municipio>>> obtenerMunicipio(Integer departamentoId) {
+    public ResponseEntity<ApiResponseDTO<List<Municipio>>> obtenerMunicipio(Long departamentoId) {
 
 
         Optional<Departamento> departamento = departamentoRepository.findById(departamentoId);

@@ -7,5 +7,5 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface IMunicipioService {
-    ResponseEntity<ApiResponseDTO<List<Municipio>>> obtenerMunicipio(Integer departamentoId);
+    ResponseEntity<ApiResponseDTO<List<Municipio>>> obtenerMunicipio(Long departamentoId);
 }

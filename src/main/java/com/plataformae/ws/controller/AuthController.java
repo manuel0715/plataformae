@@ -1,6 +1,7 @@
 package com.plataformae.ws.controller;
 
 import com.plataformae.ws.configuration.MessageConfig;
+import com.plataformae.ws.db.entity.Usuarios;
 import com.plataformae.ws.domain.OtpService;
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.dto.AuthRequestDTO;
@@ -42,6 +43,17 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ApiResponseDTO<AuthResponseDTO>> login(@RequestBody AuthRequestDTO authRequestDTO) {
         LOGGER.info("REQUEST /api/auth/login: {}", authRequestDTO.getUsername());
+
+        Usuarios user =iUsuarioService.cargarInformacionPerfil(authRequestDTO.getUsername());
+
+        if (!user.getTipoUsuario().equals("A") && !authRequestDTO.getTipoUsuario().equals(user.getTipoUsuario())) {
+            return buildResponse(
+                    "No tienes permisos suficientes para acceder a esta opción",
+                    null,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
 
         try {
             if(!iUsuarioService.existeUsuario(authRequestDTO.getUsername())){

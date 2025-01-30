@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface IMunicipioRepository extends JpaRepository <Municipio, Integer> {
+public interface IMunicipioRepository extends JpaRepository <Municipio, Long> {
 
     List<Municipio> findByDepartamento(Optional<Departamento> departamento);
 }

@@ -22,7 +22,7 @@ spring:
       connection-timeout: 30000
       pool-name: HikariPool
   jpa:
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -75,5 +75,7 @@ auth:
 
 
 parameters:
-  terminos-y-condiciones:
-    plataforma-e: "/root/services/plataformae/backend/resources/terminos_y_condiciones/terminos_y_condiciones_plataformae.pdf"
+  path-documentos:
+    terminos-y-condiciones:
+      plataforma-e: "/root/services/plataformae/backend/resources/terminos_y_condiciones/terminos_y_condiciones_plataformae.pdf"
+      universidades: "/root/services/plataformae/backend/resources/"

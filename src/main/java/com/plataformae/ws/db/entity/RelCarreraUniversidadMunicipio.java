@@ -2,8 +2,18 @@ package com.plataformae.ws.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.math.BigDecimal;
+
+@Getter
+@Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "rel_carrera_universidad_municipio", schema = "configuracion")
 public class RelCarreraUniversidadMunicipio {
 
@@ -11,50 +21,43 @@ public class RelCarreraUniversidadMunicipio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch =FetchType.LAZY)
+    @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "universidad_id")
     private Universidad universidad;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @Column(nullable = false, length = 255)
+    private String nombreUniversidad;
+
+    @ManyToOne
     @JoinColumn(name = "municipio_id")
     private Municipio municipio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "carrera_id")
     private Carrera carrera;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(nullable = false, length = 255)
+    private String nombreCarrera;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(nullable = false, length = 255)
+    private String descripcion;
 
-    public Universidad getUniversidad() {
-        return universidad;
-    }
+    @Column(nullable = false, length = 255)
+    private String pensum;
 
-    public void setUniversidad(Universidad universidad) {
-        this.universidad = universidad;
-    }
+    @Column(nullable = false)
+    private BigDecimal valorSemestre;
 
-    public Municipio getMunicipio() {
-        return municipio;
-    }
+    @Column(nullable = false, length = 255)
+    private String tituloOtorgado;
 
-    public void setMunicipio(Municipio municipio) {
-        this.municipio = municipio;
-    }
+    @Column(nullable = false, length = 255)
+    private Integer duracion;
 
-    public Carrera getCarrera() {
-        return carrera;
-    }
+    @ManyToOne
+    @JoinColumn(name = "modalidad_id")
+    private Modalidad modalidad;
 
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
-    }
+
 }

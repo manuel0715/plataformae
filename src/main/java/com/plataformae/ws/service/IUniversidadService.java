@@ -2,6 +2,7 @@ package com.plataformae.ws.service;
 
 import com.plataformae.ws.dto.ApiResponseDTO;
 import com.plataformae.ws.dto.CarreraUniversidadResponseDTO;
+import com.plataformae.ws.dto.GestionUniversidadDTO;
 import com.plataformae.ws.dto.UniversidadDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -11,5 +12,8 @@ public interface IUniversidadService {
 
     ResponseEntity<ApiResponseDTO<List<UniversidadDTO>>> obtenerUniversidades(String nit,String estado);
 
-    ResponseEntity<ApiResponseDTO<List<CarreraUniversidadResponseDTO>>> buscarCarreras(String filtro,Integer universidad,Integer modalidad);
+    ResponseEntity<ApiResponseDTO<List<CarreraUniversidadResponseDTO>>> buscarCarreras(String filtro,Integer universidad,Integer modalidad,Integer  municipio);
+
+    ResponseEntity<ApiResponseDTO<String>> upsertUniversidad(GestionUniversidadDTO universidadDto);
+
 }

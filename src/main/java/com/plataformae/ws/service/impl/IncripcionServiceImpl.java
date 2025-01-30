@@ -17,12 +17,13 @@ import java.util.List;
 import static com.plataformae.ws.util.Utils.buildResponse;
 
 @Service
+@Transactional
 public class IncripcionServiceImpl implements IInscripcionService {
 
     private final AuthUtil authUtil;
     private final IUniversidadRepository universidadRepository;
     private final IMunicipioRepository municipioRepository;
-    private final ICarreraJpaRepository carreraRepository;
+    private final ICarreraRepository carreraRepository;
     private final IInscripcionesRepository preInscripcionesRepository;
     private final InscripcionRepository inscripcionRepository;
     private final IUsuariosRepository iUsuariosRepository;
@@ -30,7 +31,7 @@ public class IncripcionServiceImpl implements IInscripcionService {
     private final IEstadoProcesoRepository estadoProcesoRepository;
     private final IEstadoContactoRepository estadoContactoRepository;
 
-    public IncripcionServiceImpl(AuthUtil authUtil, IUniversidadRepository universidadRepository, IMunicipioRepository municipioRepository, ICarreraJpaRepository carreraRepository, IInscripcionesRepository preInscripcionesRepository, InscripcionRepository inscripcionRepository, IUsuariosRepository iUsuariosRepository, ITrazabilidadGestionInscripcionesRepository trazabilidadGestionInscripcionesRepository, IEstadoProcesoRepository estadoProcesoRepository, IEstadoContactoRepository estadoContactoRepository) {
+    public IncripcionServiceImpl(AuthUtil authUtil, IUniversidadRepository universidadRepository, IMunicipioRepository municipioRepository, ICarreraRepository carreraRepository, IInscripcionesRepository preInscripcionesRepository, InscripcionRepository inscripcionRepository, IUsuariosRepository iUsuariosRepository, ITrazabilidadGestionInscripcionesRepository trazabilidadGestionInscripcionesRepository, IEstadoProcesoRepository estadoProcesoRepository, IEstadoContactoRepository estadoContactoRepository) {
         this.authUtil = authUtil;
         this.universidadRepository = universidadRepository;
         this.municipioRepository = municipioRepository;
@@ -47,6 +48,11 @@ public class IncripcionServiceImpl implements IInscripcionService {
     @Override
     public ResponseEntity<ApiResponseDTO<InscripcionResponseDTO>> guardarInscripcion(InscripcionRequestDTO request) {
 
+
+        Usuarios usuarios = iUsuariosRepository.findByUsername(request.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+
         boolean exist = preInscripcionesRepository.existsByUsuarioAndUniversidadAndMunicipioAndCarrera(request.getUsuarioId(),
                 request.getUniversidadId(), request.getMunicipioId(),request.getCarreraId());
 
@@ -61,7 +67,6 @@ public class IncripcionServiceImpl implements IInscripcionService {
         Inscripciones incripciones = new Inscripciones();
         InscripcionResponseDTO inscripcionResponseDTO = new InscripcionResponseDTO();
 
-        Usuarios usuarios = iUsuariosRepository.findByUsername(request.getUsuarioId());
         incripciones.setUsuarios(usuarios);
 
         Universidad universidad = universidadRepository.findById(request.getUniversidadId())
@@ -73,7 +78,7 @@ public class IncripcionServiceImpl implements IInscripcionService {
                 .orElseThrow(() -> new RuntimeException("Municipio no encontrado"));
         incripciones.setMunicipio(municipio);
 
-        Carrera carrera = carreraRepository.findById(request.getCarreraId().longValue())
+        Carrera carrera = carreraRepository.findById(request.getCarreraId())
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
         incripciones.setCarrera(carrera);
 
@@ -135,7 +140,8 @@ public class IncripcionServiceImpl implements IInscripcionService {
             return  buildResponse("Id estado contacto no existe ",null,HttpStatus.BAD_REQUEST);
         }
 
-        Usuarios usuario =iUsuariosRepository.findByUsername(authUtil.getAuthenticatedUser());
+        Usuarios usuario =iUsuariosRepository.findByUsername(authUtil.getAuthenticatedUser())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         if (usuario == null)   {
             return  buildResponse("Usuario estado contacto no existe ",null,HttpStatus.BAD_REQUEST);

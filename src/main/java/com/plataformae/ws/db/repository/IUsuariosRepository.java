@@ -1,16 +1,21 @@
 package com.plataformae.ws.db.repository;
 
 import com.plataformae.ws.db.entity.Usuarios;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 
 public interface IUsuariosRepository extends JpaRepository<Usuarios, String> {
-    Usuarios findByUsername(String username);
+    Optional<Usuarios> findByUsername(String username);
+
+    Usuarios findByIdentificacion(String username);
 
     boolean existsByUsername(String username);
 
@@ -34,8 +39,6 @@ public interface IUsuariosRepository extends JpaRepository<Usuarios, String> {
             "u.primerApellido = :primerApellido, " +
             "u.segundoApellido = :segundoApellido, " +
             "u.nombreCompleto = :nombreCompleto, " +
-            "u.fechaExpedicionDocumento = :fechaExpedicionDocumento, " +
-            "u.fechaVencimientoDocumento = :fechaVencimientoDocumento, " +
             "u.departamentoExpedicion.id = :departamentoExpedicion, " +
             "u.municipioExpedicion.id = :municipioExpedicion, " +
             "u.fechaNacimiento = :fechaNacimiento, " +
@@ -45,14 +48,12 @@ public interface IUsuariosRepository extends JpaRepository<Usuarios, String> {
             "u.celular = :celular, " +
             "u.fechaUltimaModificacion = CURRENT_TIMESTAMP, " +
             "u.usuarioUltimaModificacion = :username " +
-            "WHERE u.username = :username")
+            "WHERE u.identificacion = :username")
     int updatePerfilUsuario(String primerNombre,
                             String segundoNombre,
                             String primerApellido,
                             String segundoApellido,
                             String nombreCompleto,
-                            LocalDate fechaExpedicionDocumento,
-                            LocalDate fechaVencimientoDocumento,
                             int departamentoExpedicion,
                             int municipioExpedicion,
                             LocalDate fechaNacimiento,
@@ -61,5 +62,7 @@ public interface IUsuariosRepository extends JpaRepository<Usuarios, String> {
                             String email,
                             String celular,
                             String username);
+
+    Page<Usuarios> findByTipoUsuario(String tipoUsuario, Pageable pageable);
 
 }

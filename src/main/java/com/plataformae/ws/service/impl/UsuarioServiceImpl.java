@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -125,26 +126,33 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public Usuarios actualizarPerfil(String authenticatedUser, Usuarios request) {
          iUsuariosRepository.updatePerfilUsuario(request.getPrimerNombre(), request.getSegundoNombre(),request.getPrimerApellido(),request.getSegundoApellido(),
-                request.getNombreCompleto(),request.getFechaExpedicionDocumento(),request.getFechaVencimientoDocumento(),
-                request.getDepartamentoExpedicion().getId().intValue(),request.getMunicipioExpedicion().getId().intValue(),request.getFechaNacimiento(),
+                request.getNombreCompleto(),request.getDepartamentoExpedicion().getId().intValue(),request.getMunicipioExpedicion().getId().intValue(),request.getFechaNacimiento(),
                 request.getDepartamentoNacimiento().getId().intValue(),request.getMunicipioNacimiento().getId().intValue(),request.getEmail(),request.getCelular()
-                ,authenticatedUser);
+                ,request.getIdentificacion());
 
-         return iUsuariosRepository.findByUsername(authenticatedUser);
+         return iUsuariosRepository.findByIdentificacion(request.getIdentificacion());
 
     }
 
     @Override
     public Usuarios cargarInformacionPerfil(String authenticatedUser) {
-        return iUsuariosRepository.findByUsername(authenticatedUser);
+        return iUsuariosRepository.findByUsername(authenticatedUser)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
     @Override
-    public ResponseEntity<ApiResponsePageDTO<List<Usuarios>>> cargarUsuarios(int page, int size) {
+    public ResponseEntity<ApiResponsePageDTO<List<Usuarios>>> cargarUsuarios(int page, int size,String tipoUsuario) {
 
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("nombreCompleto"));
 
-        Page<Usuarios> usuariosPage = iUsuariosRepository.findAll(pageRequest);
+        Page<Usuarios> usuariosPage;
+        if (tipoUsuario != null && !tipoUsuario.isEmpty()) {
+            // Filtrar por tipo de usuario si está presente
+            usuariosPage = iUsuariosRepository.findByTipoUsuario(tipoUsuario, pageRequest);
+        } else {
+            // Obtener todos los usuarios si no hay filtro
+            usuariosPage = iUsuariosRepository.findAll(pageRequest);
+        }
 
         List<Usuarios> list = usuariosPage.getContent();
 

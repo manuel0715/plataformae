@@ -5,7 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ICarreraJpaRepository extends JpaRepository<Carrera, Long> {
+public interface ICarreraRepository extends JpaRepository<Carrera, Long> {
     List<Carrera> findByNombreContainingIgnoreCase(String nombre);
+
+
+    List<Carrera> findAllByOrderByNombreAsc();
 
 }

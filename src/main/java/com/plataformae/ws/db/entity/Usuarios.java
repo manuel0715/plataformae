@@ -48,11 +48,6 @@ public class Usuarios implements UserDetails, Serializable {
     @Column(name = "nombre_completo", length = 200, nullable = false)
     private String nombreCompleto;
 
-    @Column(name = "fecha_expedicion_documento")
-    private LocalDate fechaExpedicionDocumento;
-
-    @Column(name = "fecha_vencimiento_documento")
-    private LocalDate fechaVencimientoDocumento;
 
     @ManyToOne
     @JoinColumn(name = "departamento_expedicion_id", nullable = false)
@@ -183,21 +178,6 @@ public class Usuarios implements UserDetails, Serializable {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public LocalDate getFechaExpedicionDocumento() {
-        return fechaExpedicionDocumento;
-    }
-
-    public void setFechaExpedicionDocumento(LocalDate fechaExpedicionDocumento) {
-        this.fechaExpedicionDocumento = fechaExpedicionDocumento;
-    }
-
-    public LocalDate getFechaVencimientoDocumento() {
-        return fechaVencimientoDocumento;
-    }
-
-    public void setFechaVencimientoDocumento(LocalDate fechaVencimientoDocumento) {
-        this.fechaVencimientoDocumento = fechaVencimientoDocumento;
-    }
 
     public Departamento getDepartamentoExpedicion() {
         return departamentoExpedicion;

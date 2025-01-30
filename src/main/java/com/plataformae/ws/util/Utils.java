@@ -10,10 +10,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Utils {
 
@@ -37,6 +42,11 @@ public class Utils {
         return new ResponseEntity<>(response, status);
     }
 
+    /**
+     *
+     * @param object
+     * @return
+     */
     public static String objectToJsonString(Object object) {
         try {
             return mapper.writeValueAsString(object);
@@ -70,10 +80,8 @@ public class Utils {
         String mimeType = "";
 
         try {
-            // Obtener el tipo MIME del archivo
             mimeType = Files.probeContentType(Paths.get(imagePath));
 
-            // Leer el archivo y convertir a Base64
             byte[] imageBytes = Files.readAllBytes(Paths.get(imagePath));
             response = Base64.getEncoder().encodeToString(imageBytes);
         } catch (IOException e) {
@@ -82,5 +90,33 @@ public class Utils {
 
         // Devolver tanto el tipo MIME como el contenido en Base64
         return "data:" + mimeType + ";base64," + response;
+    }
+
+    public static void subirArchivoBase64(String base64,String nombreArchivo) throws IOException {
+
+        byte[] bI = Base64.getDecoder().decode(base64.split(";")[1].split(",")[1].getBytes());
+        InputStream imageInputStream = new ByteArrayInputStream(bI);
+        String mimeType = URLConnection.guessContentTypeFromStream(imageInputStream);
+        String ext = getMimeType(base64.split(";")[0]);
+
+    }
+
+    public static String getMimeType(String fileType) {
+        Map<String, String> mimeTypeMap = new HashMap<>();
+        mimeTypeMap.put("data:application/pdf", "pdf");
+        mimeTypeMap.put("data:application/msword", "doc");
+        mimeTypeMap.put("data:application/vnd.openxmlformats-officedocument.wordprocessingml.document", "docx");
+        mimeTypeMap.put("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "xlsx");
+        mimeTypeMap.put("data:application/vnd.ms-excel", "xls");
+        mimeTypeMap.put("data:image/jpg", "jpg");
+        mimeTypeMap.put("data:image/jpeg", "jpeg");
+        mimeTypeMap.put("data:image/png", "png");
+        mimeTypeMap.put("data:application/octet-stream", "pgp");
+        mimeTypeMap.put("data:text/plain", "txt");
+        mimeTypeMap.put("data:audio/ogg","ogg");
+        mimeTypeMap.put("data:audio/mpeg","mp3");
+        mimeTypeMap.put("data:video/mp4","mp4");
+        mimeTypeMap.put("data:audio/aac","aac");
+        return mimeTypeMap.get(fileType);
     }
 }

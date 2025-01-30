@@ -1,16 +1,15 @@
 package com.plataformae.ws.dto;
 
-import com.plataformae.ws.db.entity.RelCarreraUniversidadMunicipio;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UniversidadDTO {
-
+public class GestionUniversidadDTO {
     private Long id;
     private String estado;
     private String nombre;
@@ -21,7 +20,6 @@ public class UniversidadDTO {
     private String terminosCondiciones;
     private String direccion;
     private String telefono;
-    private List<RelCarreraUniversidadMunicipio> carreras;
-
+    private List<RelCarreraUniversidadMunicipioDTO> carreras;
 
 }

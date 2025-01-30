@@ -4,6 +4,7 @@ import com.plataformae.ws.db.entity.EstadoContacto;
 import com.plataformae.ws.db.entity.EstadoProceso;
 import com.plataformae.ws.db.entity.Inscripciones;
 import com.plataformae.ws.dto.CargarInscripcionResponseDTO;
+import com.plataformae.ws.dto.GraficasDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,9 +22,9 @@ public interface IInscripcionesRepository extends JpaRepository<Inscripciones,In
             "AND i.carrera.id = :carreraId")
     boolean existsByUsuarioAndUniversidadAndMunicipioAndCarrera(
             @Param("usuarioId") String usuarioId,
-            @Param("universidadId") Integer universidadId,
-            @Param("municipioId") Integer municipioId,
-            @Param("carreraId") Integer carreraId);
+            @Param("universidadId") Long universidadId,
+            @Param("municipioId") Long municipioId,
+            @Param("carreraId") Long carreraId);
 
 
 
@@ -69,4 +70,32 @@ public interface IInscripcionesRepository extends JpaRepository<Inscripciones,In
                           @Param("estadoProceso") EstadoProceso estadoProceso,
                           @Param("estadoContacto") EstadoContacto estadoContacto);
 
+    @Query("SELECT COUNT(i) FROM Inscripciones i WHERE i.fechaCreacion BETWEEN :fechaInicio AND :fechaFin")
+    Integer getCantidadIncripciones(@Param("fechaInicio") LocalDateTime fechaInicio,
+                                    @Param("fechaFin") LocalDateTime fechaFin);
+
+    @Query("SELECT new com.plataformae.ws.dto.GraficasDTO(m.nombre, COUNT(i)) " +
+            "FROM Inscripciones i JOIN i.municipio m WHERE i.fechaCreacion BETWEEN :fechaInicio AND :fechaFin  GROUP BY m.nombre")
+    List<GraficasDTO> getEstadisticasPorMunicipio(@Param("fechaInicio") LocalDateTime fechaInicio,
+                                                  @Param("fechaFin") LocalDateTime fechaFin);
+
+    @Query("SELECT new com.plataformae.ws.dto.GraficasDTO(u.nombre, COUNT(i)) " +
+            "FROM Inscripciones i JOIN i.universidad u WHERE i.fechaCreacion BETWEEN :fechaInicio AND :fechaFin GROUP BY u.nombre")
+    List<GraficasDTO> getEstadisticasPorUniversidad(@Param("fechaInicio") LocalDateTime fechaInicio,
+                                                    @Param("fechaFin") LocalDateTime fechaFin);
+
+    @Query("SELECT new com.plataformae.ws.dto.GraficasDTO(ep.nombre, COUNT(i)) " +
+            "FROM Inscripciones i JOIN i.estadoProceso ep WHERE i.fechaCreacion BETWEEN :fechaInicio AND :fechaFin GROUP BY ep.nombre")
+    List<GraficasDTO> getEstadisticasPorEstadoProceso(@Param("fechaInicio") LocalDateTime fechaInicio,
+                                                      @Param("fechaFin") LocalDateTime fechaFin);
+
+    @Query("SELECT new com.plataformae.ws.dto.GraficasDTO(ec.nombre, COUNT(i)) " +
+            "FROM Inscripciones i JOIN i.estadoContacto ec WHERE i.fechaCreacion BETWEEN :fechaInicio AND :fechaFin GROUP BY ec.nombre")
+    List<GraficasDTO> getEstadisticasPorEstadoContacto(@Param("fechaInicio") LocalDateTime fechaInicio,
+                                                       @Param("fechaFin") LocalDateTime fechaFin);
+
+    @Query("SELECT new com.plataformae.ws.dto.GraficasDTO(c.nombre, COUNT(i)) " +
+            "FROM Inscripciones i JOIN i.carrera c WHERE i.fechaCreacion BETWEEN :fechaInicio AND :fechaFin GROUP BY c.nombre")
+    List<GraficasDTO> getEstadisticasPorCarrera(@Param("fechaInicio") LocalDateTime fechaInicio,
+                                                @Param("fechaFin") LocalDateTime fechaFin);
 }
