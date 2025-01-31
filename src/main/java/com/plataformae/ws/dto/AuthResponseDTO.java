@@ -7,8 +7,11 @@ public class AuthResponseDTO {
 
     private String identificacion;
     private String tipoIdentificacion;
-    private String nombres;
-    private String apellidos;
+    private String primerNombre;
+    private String segundoNombre;
+    private String primerApellido;
+    private String segundoApellido;
+    private String nombreCompleto;
     private String tipoUsuario;
     private String username;
     private String token;
@@ -38,20 +41,44 @@ public class AuthResponseDTO {
         this.tipoIdentificacion = tipoIdentificacion;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getPrimerNombre() {
+        return primerNombre;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre = primerNombre;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getSegundoNombre() {
+        return segundoNombre;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public String getTipoUsuario() {

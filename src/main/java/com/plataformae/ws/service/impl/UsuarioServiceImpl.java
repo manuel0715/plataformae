@@ -1,7 +1,9 @@
 package com.plataformae.ws.service.impl;
 
+import com.plataformae.ws.db.entity.RelRolesUsuarios;
 import com.plataformae.ws.db.entity.Rol;
 import com.plataformae.ws.db.entity.Usuarios;
+import com.plataformae.ws.db.repository.IRelRolesUsuariosRepository;
 import com.plataformae.ws.db.repository.IUsuariosRepository;
 import com.plataformae.ws.dto.ApiResponsePageDTO;
 import com.plataformae.ws.service.IUsuarioService;
@@ -32,12 +34,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private static final Logger LOGGER = LogManager.getLogger(UsuarioServiceImpl.class);
 
     private final IUsuariosRepository iUsuariosRepository;
+    private final IRelRolesUsuariosRepository rolesUsuariosRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarioServiceImpl(PasswordEncoder passwordEncoder, IUsuariosRepository iUsuariosRepository) {
+    public UsuarioServiceImpl(PasswordEncoder passwordEncoder, IUsuariosRepository iUsuariosRepository, IRelRolesUsuariosRepository rolesUsuariosRepository) {
         this.iUsuariosRepository = iUsuariosRepository;
         this.passwordEncoder = passwordEncoder;
+        this.rolesUsuariosRepository = rolesUsuariosRepository;
     }
 
     @Override
